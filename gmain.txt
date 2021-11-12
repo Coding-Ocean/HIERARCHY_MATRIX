@@ -1,0 +1,63 @@
+#include<vector>
+#include"CAMERA.h"
+#include"PLANE.h"
+#include"SQUARE.h"
+#include"CUBE.h"
+#include"POLYGON.h"
+#include"CYLINDER.h"
+#include"PRISM.h"
+#include"JAG.h"
+#include"CONE.h"
+#include"SPHERE.h"
+#include"BARREL.h"
+void gmain() {
+    //system
+    window(1920, 1080, full);
+    hideCursor();
+    CAMERA camera;//view
+    MODEL::proj.pers(30*TO_RAD, width / height, 1, 10);
+    MODEL::lightPos.set(0, 0, 1);
+    //models
+    std::vector<MODEL*> models;
+    models.push_back(new JAG(6, 0.2f, 0.3f));
+    models.push_back(new JAG(60, 0.8f, 0.3f));
+    models.push_back(new JAG(10, 0.6f, 0.3f));
+    models.push_back(new SQUARE);
+    models.push_back(new POLYGON);
+    models.push_back(new CUBE);
+    models.push_back(new CYLINDER);
+    models.push_back(new PRISM);
+    models.push_back(new CONE);
+    models.push_back(new SPHERE);
+    int numModels = (int)models.size();
+    //colors
+    COLOR* colors = new COLOR[numModels];
+    float theta = 3.141592f * 2 / numModels;
+    colorMode(HSV);
+    for (int i = 0; i < numModels; i++) {
+        colors[i].set(theta * i, 192, 255);
+    }
+    //world matrix
+    MATRIX world;
+    float angle = 0;
+    float scale = 0.2f;
+    //main loop
+    while (notQuit) {
+        camera.update();
+        clear();
+        for (int i = 0; i < numModels; i++) {
+            world.identity();
+            //world.mulRotateY(angle);
+            world.mulTranslate(sin(theta*i), 0, cos(theta*i));
+            world.mulRotateY(-angle*20);
+            world.mulScaling(scale, scale, scale);
+            angle += 0.0001f;
+            models[i]->draw(world, colors[i], 0.3f);
+        }
+    }
+    //delete
+    for (int i = 0; i < numModels; i++) {
+        delete models[i];
+    }
+    delete[]colors;
+}
