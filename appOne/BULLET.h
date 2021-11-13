@@ -9,6 +9,8 @@ class BULLET :
     CONE Cone;
     MATRIX Master;
     COLOR Color;
+    int Step = -1;
+    OBJECT* Target[3];
 public:
     BULLET(class GAME* game);
     void update();

@@ -31,8 +31,8 @@ void SNOW_MAN::update()
     }
 
     if (game()->stateIsRotate()) {
-        VECTOR b = game()->cannon()->pos() - Pos;;
-        Angle.y += angleBetweenY(b) * 0.05f;
+        VECTOR dir = game()->cannon()->pos() - Pos;;
+        rotate(dir, 0.05f);
     }
 
     Master.translate(Pos.x, Pos.y, Pos.z);

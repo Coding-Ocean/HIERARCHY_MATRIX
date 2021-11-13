@@ -50,12 +50,14 @@ void SATELLITE::update()
         a.normalize();
         b.normalize();
         dir = a + b;
-        //‚wŽ²‰ñ“]
-        dir.normalize();
-        Angle.x += angleBetweenX(dir) * 0.05f;
-        //‚xŽ²‰ñ“]
-        float angle_y = angleBetweenY(dir);
-        Angle.y += angle_y * 0.05f;
+        //‰ñ“]
+        rotate(dir, 0.05f);
+        ////‚wŽ²‰ñ“]
+        //dir.normalize();
+        //Angle.x += angleBetweenX(dir) * 0.05f;
+        ////‚xŽ²‰ñ“]
+        //float angle_y = angleBetweenY(dir);
+        //Angle.y += angle_y * 0.05f;
     }
 
 

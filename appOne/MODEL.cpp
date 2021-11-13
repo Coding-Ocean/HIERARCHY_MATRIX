@@ -1,20 +1,26 @@
 #include "MODEL.h"
 extern COLOR_MODE ColorMode;
+
 //MODELを継承した全てのクラスで共有するインスタンス
 MATRIX MODEL::view;
 MATRIX MODEL::proj;
 VECTOR MODEL::lightPos;
 
-MODEL::MODEL() {
+MODEL::MODEL() 
+{
 }
-MODEL::~MODEL() {
+
+MODEL::~MODEL() 
+{
     if (OPositions)delete[] OPositions;
     if (ONormals)delete[] ONormals;
     if (Positions)delete[] Positions;
     if (Indices)delete[] Indices;
     if (Colors)delete[] Colors;
 }
-void MODEL::allocateMemory() {
+
+void MODEL::allocateMemory() 
+{
     if (NumVertices == 0) {
         print("頂点数を設定していない");
     }
@@ -32,7 +38,9 @@ void MODEL::allocateMemory() {
     NumIndices = NumTriangles * 3;
     Indices = new int[NumIndices];
 }
-void MODEL::draw(const MATRIX& world, const COLOR& color, float ambient) {
+
+void MODEL::draw(const MATRIX& world, const COLOR& color, float ambient) 
+{
     //worldから回転・拡大縮小要素を取り出す
     MATRIX mRS = world;
     mRS._14 = mRS._24 = mRS._34 = 0;
@@ -50,7 +58,7 @@ void MODEL::draw(const MATRIX& world, const COLOR& color, float ambient) {
         if (Lighting) {
             normal = normalize(mRS * ONormals[i]);
             //float bright = max(ambient, dot(normal, lightPos));
-            float bright = max(0.6f, dot(normal, lightPos));
+            float bright = max(0.5f, dot(normal, lightPos));
             if (ColorMode == RGB) {
                 Colors[i] = color * bright;
             }
@@ -88,9 +96,13 @@ void MODEL::draw(const MATRIX& world, const COLOR& color, float ambient) {
         }
     }
 }
-void MODEL::noCulling() {
+
+void MODEL::noCulling() 
+{
     Culling = 0;
 }
-void MODEL::noLighting() {
+
+void MODEL::noLighting() 
+{
     Lighting = 0;
 }

@@ -9,10 +9,8 @@ public:
     virtual ~OBJECT();
     virtual void update();
     virtual void draw();
+    int rotate(const VECTOR& b, float speed);
     VECTOR pos();
     VECTOR angle();
-    float angleBetweenX(const VECTOR& b);
-    float angleBetweenY(const VECTOR& b);
-    int rotate(const VECTOR& b, float speed);
 };
 

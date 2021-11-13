@@ -1,5 +1,6 @@
 #include"input.h"
 #include"mathUtil.h"
+#include"GAME.h"
 #include"MODEL.h"
 #include "CAMERA.h"
 CAMERA::CAMERA(class GAME* game, float distance, float zoomSpeed)
@@ -14,7 +15,27 @@ CAMERA::CAMERA(class GAME* game, float distance, float zoomSpeed)
     ,ZoomSpeed(zoomSpeed)
 {
 }
+
+void CAMERA::setTarget()
+{
+    Target[0] = game()->floor();
+    Target[1] = game()->bullet();
+    Target[2] = game()->satellite1();
+    Target[3] = game()->satellite2();
+    Target[4] = game()->snowMan();
+}
+
 void CAMERA::update(){
+    if (isTrigger(KEY_C)) {
+        ++TargetIdx %= 5;
+        if (TargetIdx == 0) {
+            Radius = 17;
+        }
+        else {
+            Radius = 6;
+        }
+    }
+    TargetPos = Target[TargetIdx]->pos();
     //経度（東西）
     if (isPress(KEY_J)) { Longitude -= Speed; }
     if (isPress(KEY_L)) { Longitude += Speed; }
@@ -29,13 +50,13 @@ void CAMERA::update(){
     if (isPress(KEY_Y)) { PosOffsetY += Speed; }
     if (isPress(KEY_H)) { PosOffsetY -= Speed; }
     //カメラ位置（３D極座標）
-    CamPos.x = sin(Longitude) * cos(Latitude) * Radius;
-    CamPos.y =                  sin(Latitude) * Radius;
-    CamPos.z = cos(Longitude) * cos(Latitude) * Radius;
-    CamPos.y += PosOffsetY;
-    LookPos.y = PosOffsetY;
+    CamPos.x = sin(Longitude) * cos(Latitude) * Radius + TargetPos.x;
+    CamPos.y =                  sin(Latitude) * Radius + TargetPos.y;
+    CamPos.z = cos(Longitude) * cos(Latitude) * Radius + TargetPos.z;
+    //CamPos.y += PosOffsetY;
+    //TargetPos.y = PosOffsetY;
     UpVec.y = cos(Latitude);
-    MODEL::view.camera(CamPos, LookPos, UpVec);
+    MODEL::view.camera(CamPos, TargetPos, UpVec);
 #ifdef _DEBUG
     print((let)"Longitude=" + Longitude);
     print((let)"Latitude=" + Latitude);

@@ -15,8 +15,15 @@ class CAMERA :
     float Speed = 0;
     float PosOffsetY = 0;
     float ZoomSpeed = 0;
+    OBJECT* Target[5];
+    int TargetIdx = 0;
+    VECTOR TargetPos;
 public:
     CAMERA(class GAME* game, float distance=17, float zoomSpeed=0.1f);
+    void setTarget();
     void update();
+    float longitude() {
+        return Longitude;
+    }
 };
 

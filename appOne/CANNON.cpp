@@ -1,4 +1,5 @@
 #include"GAME.h"
+#include"CAMERA.h"
 #include "CANNON.h"
 
 CANNON::CANNON(GAME* game) :
@@ -18,8 +19,11 @@ void CANNON::update()
         if (isPress(KEY_W)) { dir.z = -1; }
         if (isPress(KEY_S)) { dir.z = 1; }
         if (dir.x != 0 || dir.z != 0) {
-            //移動
             dir.normalize();
+            MATRIX rot;
+            rot.rotateY(game()->camera()->longitude());
+            dir = rot * dir;
+            //移動
             Pos += dir * 0.05f;
             //回転
             rotate(dir, 0.25f);
@@ -34,10 +38,14 @@ void CANNON::update()
         //dirへ向ける
         VECTOR dir = game()->satellite1()->pos() - Pos;
         //回転が終了、かつ、キーが押された
-        if (rotate(dir,0.05f) && isTrigger(KEY_Z)) {
-            game()->changeStateToMove();
+        if (rotate(dir, 0.05f)) {
+            print("発射準備完了");
+            if (isTrigger(KEY_Z)) {
+                game()->changeStateToFly();
+            }
         }
     }
+
 
     Master.identity();
     Master.mulTranslate(Pos.x, Pos.y, Pos.z);

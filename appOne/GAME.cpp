@@ -19,6 +19,11 @@ bool GAME::stateIsRotate()
     return State == ROTATE;
 }
 
+bool GAME::stateIsFly()
+{
+    return State == FLY;
+}
+
 void GAME::changeStateToMove()
 {
     State = MOVE;
@@ -29,13 +34,19 @@ void GAME::changeStateToRotate()
     State = ROTATE;
 }
 
+void GAME::changeStateToFly()
+{
+    State = FLY;
+}
+
 int GAME::create()
 {
     window(1920, 1080, full);
-    CreateObject(new CAMERA(this));
+    hideCursor();
+    CameraIdx = CreateObject(new CAMERA(this));
     CreateObject(new PROJECTOR(this));
-    CreateObject(new LIGHT(this,0,1,0));
-    CreateObject(new FLOOR(this));
+    CreateObject(new LIGHT(this,0,1,0.2f));
+    FloorIdx = CreateObject(new FLOOR(this));
     CannonIdx = CreateObject(new CANNON(this));
     BulletIdx = CreateObject(new BULLET(this));
     Satellite1Idx = CreateObject(new SATELLITE(this));
@@ -43,8 +54,18 @@ int GAME::create()
     SnowManIdx = CreateObject(new SNOW_MAN(this));
     HumanIdx = CreateObject(new HUMAN(this));
     changeStateToMove();
-
+    camera()->setTarget();
     return 0;
+}
+
+CAMERA* GAME::camera()
+{
+    return (CAMERA*)Objects.at(CameraIdx);
+}
+
+OBJECT* GAME::floor()
+{
+    return Objects.at(FloorIdx);
 }
 
 OBJECT* GAME::cannon()
