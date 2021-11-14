@@ -156,6 +156,7 @@
     <ClCompile Include="BULLET.cpp" />
     <ClCompile Include="CAMERA.cpp" />
     <ClCompile Include="CANNON.cpp" />
+    <ClCompile Include="ENEMY.cpp" />
     <ClCompile Include="FLOOR.cpp" />
     <ClCompile Include="GAME.cpp" />
     <ClCompile Include="GAME_OBJECT.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="CONE.h" />
     <ClInclude Include="CUBE.h" />
     <ClInclude Include="CYLINDER.h" />
+    <ClInclude Include="ENEMY.h" />
     <ClInclude Include="FLOOR.h" />
     <ClInclude Include="GAME.h" />
     <ClInclude Include="GAME_OBJECT.h" />
