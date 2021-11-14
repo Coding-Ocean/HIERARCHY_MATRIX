@@ -10,7 +10,7 @@ SATELLITE::SATELLITE(class GAME* game)
     BodyColor.set(255, 255, 0);
     SquareColor.set(255, 200, 60);
     WingModel.scaling(0.7f, 1.1f, 1.0f);
-    AdvSpeed = 0.005f;
+    AdvSpeed = 0.01f;
     Id = Num;
     if (Id == 0) {
         Pos.set(4, 5, 0);
@@ -26,13 +26,13 @@ void SATELLITE::update()
     //move
     if (game()->stateIsMove()) {
         Pos.z = sin(AngleForPos) * 5;
-        rotate(VECTOR(0, 0, 1), 0.25f);
         if (Id == 0) {
             AngleForPos += AdvSpeed;
         }
         else {
             AngleForPos += -AdvSpeed;
         }
+        finishRotating = 0;
     }
 
     //rotate
@@ -51,15 +51,22 @@ void SATELLITE::update()
         b.normalize();
         dir = a + b;
         //‰ñ“]
-        rotate(dir, 0.05f);
-        ////‚wŽ²‰ñ“]
-        //dir.normalize();
-        //Angle.x += angleBetweenX(dir) * 0.05f;
-        ////‚xŽ²‰ñ“]
-        //float angle_y = angleBetweenY(dir);
-        //Angle.y += angle_y * 0.05f;
+        if (rotate(dir, 0.05f)) {
+            finishRotating = 1;
+        }
     }
 
+    if (game()->stateIsFly()) {
+        finishRotating = 0;
+    }
+
+    //rotateBack
+    if (game()->stateIsRotateBack()) {
+        //‰ñ“]
+        if (rotate(VECTOR(0,0,1), 0.05f)) {
+            finishRotating = 1;
+        }
+    }
 
     //create matrix
     Ref.translate(0, 0, 0.001f);
@@ -88,4 +95,9 @@ void SATELLITE::draw()
 
     WingR = Master * WingR;
     Square.draw(WingR*WingModel, SquareColor, Ambient);
+}
+
+int SATELLITE::finished()
+{
+    return finishRotating;
 }

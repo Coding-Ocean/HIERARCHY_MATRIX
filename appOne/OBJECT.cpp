@@ -13,6 +13,11 @@ void OBJECT::draw()
 {
 }
 
+int OBJECT::finished()
+{
+    return 0;
+}
+
 VECTOR OBJECT::pos()
 {
     return Pos;

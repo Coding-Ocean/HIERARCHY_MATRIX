@@ -25,7 +25,7 @@ void SNOW_MAN::update()
 
         //VECTOR b = newPos - Pos;
         //Pos += b;
-        Pos.set(6, 1.2f, -3);
+        Pos.set(6, 1.2f, 3);
 
         //Angle.y += angleBetweenY(b) * 0.05f;
     }

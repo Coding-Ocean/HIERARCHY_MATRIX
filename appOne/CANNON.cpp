@@ -46,6 +46,13 @@ void CANNON::update()
         }
     }
 
+    if (game()->stateIsRotateBack()) {
+        if (rotate(VECTOR(0, 0, 1), 0.05f) &&
+            game()->satellite1()->finished() &&
+            game()->satellite2()->finished()) {
+            game()->changeStateToMove();
+        }
+    }
 
     Master.identity();
     Master.mulTranslate(Pos.x, Pos.y, Pos.z);

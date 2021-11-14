@@ -6,7 +6,7 @@ class GAME
 private:
     int CameraIdx, FloorIdx, CannonIdx, BulletIdx, 
         Satellite1Idx, Satellite2Idx, SnowManIdx, HumanIdx;
-    enum STATE { MOVE, ROTATE, FLY };
+    enum STATE { MOVE, ROTATE, FLY, ROTATE_BACK };
     STATE State;
 public:
     int create();
@@ -21,9 +21,11 @@ public:
     bool stateIsMove();
     bool stateIsRotate();
     bool stateIsFly();
+    bool stateIsRotateBack();
     void changeStateToMove();
     void changeStateToRotate();
     void changeStateToFly();
+    void changeStateToRotateBack();
 //Framework
 private:
     std::vector<class OBJECT*> Objects;

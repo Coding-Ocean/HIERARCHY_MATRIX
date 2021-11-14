@@ -23,7 +23,7 @@ void BULLET::update()
         if (Step == -1) {
             Target[0] = game()->satellite1();
             Target[1] = game()->satellite2();
-            Target[2] = game()->human();
+            Target[2] = game()->snowMan();
             Step = 0;
         }
         if (Step <= 2) {
@@ -37,7 +37,7 @@ void BULLET::update()
         }
         else if (isTrigger(KEY_Z)) {
             Step = -1;
-            game()->changeStateToMove();
+            game()->changeStateToRotateBack();
         }
     }
 

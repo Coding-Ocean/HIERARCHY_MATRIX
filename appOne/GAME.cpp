@@ -19,9 +19,15 @@ bool GAME::stateIsRotate()
     return State == ROTATE;
 }
 
+
 bool GAME::stateIsFly()
 {
     return State == FLY;
+}
+
+bool GAME::stateIsRotateBack()
+{
+    return State == ROTATE_BACK;
 }
 
 void GAME::changeStateToMove()
@@ -37,6 +43,11 @@ void GAME::changeStateToRotate()
 void GAME::changeStateToFly()
 {
     State = FLY;
+}
+
+void GAME::changeStateToRotateBack()
+{
+    State = ROTATE_BACK;
 }
 
 int GAME::create()

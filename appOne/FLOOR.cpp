@@ -18,7 +18,7 @@ void FLOOR::draw()
         for (int x = -3; x <= 3; x++) {
             World.identity();
             World.mulScaling(3, 1, 3);
-            World.mulTranslate(x, 0, z);
+            World.mulTranslate((float)x, 0, (float)z);
             int no = (z + x) % 2 == 0 ? 0 : 1;
             Plane.draw(World, Color[no]);
         }
