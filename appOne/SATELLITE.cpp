@@ -11,6 +11,7 @@ SATELLITE::SATELLITE(class GAME* game)
     SquareColor.set(255, 200, 60);
     WingModel.scaling(0.7f, 1.1f, 1.0f);
     AdvSpeed = 0.01f;
+
     Id = Num;
     if (Id == 0) {
         Pos.set(4, 5, 0);
@@ -18,6 +19,7 @@ SATELLITE::SATELLITE(class GAME* game)
     else{
         Pos.set(-4, 6, 0);
     }
+
     Num++;
 }
 
@@ -40,12 +42,12 @@ void SATELLITE::update()
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
         VECTOR a,b,dir;
         if (Id == 0) {
-            a = game()->cannon()->pos() - Pos;
-            b = game()->satellite2()->pos() - Pos;
+            a = game()->object(GAME::OBJ::CANNON)->pos() - Pos;
+            b = game()->object(GAME::OBJ::SATELLITE2)->pos() - Pos;
         }
         else {
-            a = game()->satellite1()->pos() - Pos;
-            b = game()->snowMan()->pos() - Pos;
+            a = game()->object(GAME::OBJ::SATELLITE1)->pos() - Pos;
+            b = game()->object(GAME::OBJ::ENEMY)->pos() - Pos;
         }
         a.normalize();
         b.normalize();

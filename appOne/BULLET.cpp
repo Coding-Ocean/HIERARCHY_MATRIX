@@ -11,19 +11,19 @@ BULLET::BULLET(GAME* game)
 void BULLET::update()
 {
     if (game()->stateIsMove()) {
-        Pos = game()->cannon()->pos();
-        Angle = game()->cannon()->angle();
+        Pos = game()->object(GAME::OBJ::CANNON)->pos();
+        Angle = game()->object(GAME::OBJ::CANNON)->angle();
     }
 
     if (game()->stateIsRotate()) {
-        Angle = game()->cannon()->angle();
+        Angle = game()->object(GAME::OBJ::CANNON)->angle();
     }
 
     if (game()->stateIsFly()) {
         if (Step == -1) {
-            Target[0] = game()->satellite1();
-            Target[1] = game()->satellite2();
-            Target[2] = game()->enemy();
+            Target[0] = game()->object(GAME::OBJ::SATELLITE1);
+            Target[1] = game()->object(GAME::OBJ::SATELLITE2);
+            Target[2] = game()->object(GAME::OBJ::ENEMY);
             Step = 0;
         }
         if (Step <= 2) {

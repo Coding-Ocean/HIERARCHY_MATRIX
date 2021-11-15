@@ -10,6 +10,11 @@
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
 
+OBJECT* GAME::object(OBJ id)
+{
+    return Objects[static_cast<int>(id)];
+}
+
 bool GAME::stateIsMove()
 {
     return State == MOVE;
@@ -53,75 +58,32 @@ void GAME::changeStateToRotateBack()
 int GAME::create()
 {
     setAllData(allData);
+
     window(1920, 1080, full);
     hideCursor();
     
-    //Object
-    CameraIdx = AddObject(new CAMERA(this));
-    AddObject(new PROJECTOR(this));
-    AddObject(new LIGHT(this,0,1,0.2f));
-    FloorIdx = AddObject(new FLOOR(this));
-    CannonIdx = AddObject(new CANNON(this));
-    BulletIdx = AddObject(new BULLET(this));
-    Satellite1Idx = AddObject(new SATELLITE(this));
-    Satellite2Idx = AddObject(new SATELLITE(this));
-    EnemyIdx = AddObject(new ENEMY(this));
-    SnowManIdx = AddObject(new SNOW_MAN(this));
-    HumanIdx = AddObject(new HUMAN(this));
+    //Objects
+    AddObject(OBJ::CAMERA, new CAMERA(this));
+    AddObject(OBJ::PROJECTOR, new PROJECTOR(this));
+    AddObject(OBJ::LIGHT, new LIGHT(this, 0, 1, 0.2f));
+    AddObject(OBJ::FLOOR, new FLOOR(this));
+    AddObject(OBJ::CANNON, new CANNON(this));
+    AddObject(OBJ::BULLET, new BULLET(this));
+    AddObject(OBJ::SATELLITE1, new SATELLITE(this));
+    AddObject(OBJ::SATELLITE2, new SATELLITE(this));
+    AddObject(OBJ::ENEMY, new ENEMY(this));
+    AddObject(OBJ::SNOW_MAN, new SNOW_MAN(this));
+    AddObject(OBJ::HUMAN, new HUMAN(this));
 
-    camera()->create();
+    object(GAME::OBJ::CAMERA)->create();
 
     changeStateToMove();
     return 0;
 }
 
-OBJECT* GAME::camera()
-{
-    return Objects.at(CameraIdx);
-}
-
-OBJECT* GAME::floor()
-{
-    return Objects.at(FloorIdx);
-}
-
-OBJECT* GAME::cannon()
-{
-    return Objects.at(CannonIdx);
-}
-
-OBJECT* GAME::bullet()
-{
-    return Objects.at(BulletIdx);
-}
-
-OBJECT* GAME::satellite1()
-{
-    return Objects.at(Satellite1Idx);
-}
-
-OBJECT* GAME::satellite2()
-{
-    return Objects.at(Satellite2Idx);
-}
-
-OBJECT* GAME::enemy()
-{
-    return Objects.at(EnemyIdx);
-}
-
-OBJECT* GAME::snowMan()
-{
-    return Objects.at(SnowManIdx);
-}
-
-OBJECT* GAME::human()
-{
-    return Objects.at(HumanIdx);
-}
-
 //framework----------------------------------------------------------
 GAME::GAME()
+    :Objects(static_cast<int>(OBJ::NUM_OBJECTS),nullptr)
 {
 }
 
@@ -139,8 +101,10 @@ void GAME::run()
     }
 }
 
-int GAME::AddObject(OBJECT* object)
+int GAME::AddObject(OBJ id,OBJECT* object)
 {
-    Objects.emplace_back(object);
-    return (int)Objects.size() - 1;
+    //Objects.emplace_back(object);
+    //return (int)Objects.size() - 1;
+    Objects[static_cast<int>(id)] = object;
+    return static_cast<int>(id);
 }

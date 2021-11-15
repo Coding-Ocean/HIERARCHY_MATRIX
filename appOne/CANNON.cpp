@@ -21,7 +21,7 @@ void CANNON::update()
         if (dir.x != 0 || dir.z != 0) {
             dir.normalize();
             MATRIX rot;
-            rot.rotateY(game()->camera()->angle().y);
+            rot.rotateY(game()->object(GAME::OBJ::CAMERA)->angle().y);
             dir = rot * dir;
             //移動
             Pos += dir * 0.05f;
@@ -36,7 +36,7 @@ void CANNON::update()
 
     if (game()->stateIsRotate()) {
         //dirへ向ける
-        VECTOR dir = game()->satellite1()->pos() - Pos;
+        VECTOR dir = game()->object(GAME::OBJ::SATELLITE1)->pos() - Pos;
         //回転が終了、かつ、キーが押された
         if (rotate(dir, 0.05f)) {
             print("発射準備完了");
@@ -48,8 +48,8 @@ void CANNON::update()
 
     if (game()->stateIsRotateBack()) {
         if (rotate(VECTOR(0, 0, 1), 0.05f) &&
-            game()->satellite1()->finished() &&
-            game()->satellite2()->finished()) {
+            game()->object(GAME::OBJ::SATELLITE1)->finished() &&
+            game()->object(GAME::OBJ::SATELLITE2)->finished()) {
             game()->changeStateToMove();
         }
     }

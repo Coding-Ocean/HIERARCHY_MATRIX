@@ -17,7 +17,7 @@ ENEMY::ENEMY(GAME* game)
 
 void ENEMY::update()
 {
-    if (game()->bullet()->finished() ||
+    if (game()->object(GAME::OBJ::BULLET)->finished() ||
         game()->stateIsRotateBack()) {
         AnimAngle = 0;
     }
@@ -50,5 +50,4 @@ void ENEMY::draw()
     NucleusA.mulScaling(0.1f, 0.1f, 0.1f);
     NucleusA = Master * NucleusA;
     Sphere.draw(NucleusA);
-
 }

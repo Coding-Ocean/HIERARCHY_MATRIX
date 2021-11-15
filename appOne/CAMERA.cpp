@@ -13,11 +13,11 @@ int CAMERA::create()
     Data = game()->allData.cameraData;
     OBJECT::Angle = Data.angle;
 
-    Target[0] = game()->floor();
-    Target[1] = game()->bullet();
-    Target[2] = game()->satellite1();
-    Target[3] = game()->satellite2();
-    Target[4] = game()->enemy();
+    Target[0] = game()->object(GAME::OBJ::FLOOR);
+    Target[1] = game()->object(GAME::OBJ::BULLET);
+    Target[2] = game()->object(GAME::OBJ::SATELLITE1);// object(GAME::OBJ::SATELLITE1();
+    Target[3] = game()->object(GAME::OBJ::SATELLITE2); //object(GAME::OBJ::SATELLITE2();
+    Target[4] = game()->object(GAME::OBJ::ENEMY); //object(GAME::OBJ::ENEMY);
 
     return 0;
 }

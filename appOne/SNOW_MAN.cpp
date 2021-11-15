@@ -21,7 +21,7 @@ void SNOW_MAN::update()
     }
 
     if (game()->stateIsRotate()) {
-        VECTOR dir = game()->cannon()->pos() - Pos;;
+        VECTOR dir = game()->object(GAME::OBJ::CANNON)->pos() - Pos;;
         rotate(dir, 0.05f);
     }
 
