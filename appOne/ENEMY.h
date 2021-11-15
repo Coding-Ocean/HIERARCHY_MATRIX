@@ -9,9 +9,12 @@ class ENEMY :
 {
     SPHERE Sphere;
     CYLINDER Cylinder;
-    MATRIX SphereModelA, SphereModelB;
-    MATRIX SphereA, SphereB, Connect;
+    MATRIX StickModel, HeadModel, NucleusModel;
+    MATRIX Master, Stick, Head, NucleusA, NucleusB;
+    float AnimAngle = 0;
 public:
     ENEMY(class GAME* game);
+    void update();
+    void draw();
 };
 

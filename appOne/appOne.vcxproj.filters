@@ -68,7 +68,10 @@
     <ClCompile Include="SATELLITE.cpp">
       <Filter>OBJECT</Filter>
     </ClCompile>
-    <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="ENEMY.cpp">
+      <Filter>OBJECT</Filter>
+    </ClCompile>
+    <ClCompile Include="ALL_DATA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BARREL.h">
@@ -139,6 +142,9 @@
     <ClInclude Include="SATELLITE.h">
       <Filter>OBJECT</Filter>
     </ClInclude>
-    <ClInclude Include="ENEMY.h" />
+    <ClInclude Include="ENEMY.h">
+      <Filter>OBJECT</Filter>
+    </ClInclude>
+    <ClInclude Include="ALL_DATA.h" />
   </ItemGroup>
 </Project>

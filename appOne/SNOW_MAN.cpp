@@ -5,11 +5,12 @@ SNOW_MAN::SNOW_MAN(GAME* game):
     GAME_OBJECT(game),
     TruncatedCone(36,0,-1,0.5f,0.3f)
 {
+    Pos.set(-9, 1.2f, 9);
+
     BodyMdl.identity();
     HeadMdl.scaling(0.7f,0.7f,0.7f);
     MouseMdl.scaling(0.1f, 0.05f, 0.1f);
     EyeMdl.scaling(0.1f, 0.1f, 0.1f);
-    HatMdl.identity();
     HatMdl.scaling(0.3f, 0.3f, 0.3f);
     HatMdl.mulRotateX(1.57f);
 }
@@ -17,17 +18,6 @@ SNOW_MAN::SNOW_MAN(GAME* game):
 void SNOW_MAN::update()
 {
     if (game()->stateIsMove()) {
-        //VECTOR newPos;
-        //newPos.x = sin(Theta) * 3;
-        //newPos.z = cos(Theta) * 3;
-        //newPos.y = 1;
-        //Theta += 0.005f;
-
-        //VECTOR b = newPos - Pos;
-        //Pos += b;
-        Pos.set(6, 1.2f, 3);
-
-        //Angle.y += angleBetweenY(b) * 0.05f;
     }
 
     if (game()->stateIsRotate()) {
@@ -50,7 +40,6 @@ void SNOW_MAN::update()
 
 void SNOW_MAN::draw()
 {
-
     Body = Master * Body;
     Sphere.draw(Body * BodyMdl);
     

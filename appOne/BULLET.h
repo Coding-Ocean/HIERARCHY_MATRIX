@@ -15,5 +15,6 @@ public:
     BULLET(class GAME* game);
     void update();
     void draw();
+    int finished();
 };
 

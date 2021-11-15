@@ -6,6 +6,7 @@
 #include "CANNON.h"
 #include "BULLET.h"
 #include "SATELLITE.h"
+#include "ENEMY.h"
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
 
@@ -18,7 +19,6 @@ bool GAME::stateIsRotate()
 {
     return State == ROTATE;
 }
-
 
 bool GAME::stateIsFly()
 {
@@ -52,26 +52,32 @@ void GAME::changeStateToRotateBack()
 
 int GAME::create()
 {
+    setAllData(allData);
     window(1920, 1080, full);
     hideCursor();
-    CameraIdx = CreateObject(new CAMERA(this));
-    CreateObject(new PROJECTOR(this));
-    CreateObject(new LIGHT(this,0,1,0.2f));
-    FloorIdx = CreateObject(new FLOOR(this));
-    CannonIdx = CreateObject(new CANNON(this));
-    BulletIdx = CreateObject(new BULLET(this));
-    Satellite1Idx = CreateObject(new SATELLITE(this));
-    Satellite2Idx = CreateObject(new SATELLITE(this));
-    SnowManIdx = CreateObject(new SNOW_MAN(this));
-    HumanIdx = CreateObject(new HUMAN(this));
+    
+    //Object
+    CameraIdx = AddObject(new CAMERA(this));
+    AddObject(new PROJECTOR(this));
+    AddObject(new LIGHT(this,0,1,0.2f));
+    FloorIdx = AddObject(new FLOOR(this));
+    CannonIdx = AddObject(new CANNON(this));
+    BulletIdx = AddObject(new BULLET(this));
+    Satellite1Idx = AddObject(new SATELLITE(this));
+    Satellite2Idx = AddObject(new SATELLITE(this));
+    EnemyIdx = AddObject(new ENEMY(this));
+    SnowManIdx = AddObject(new SNOW_MAN(this));
+    HumanIdx = AddObject(new HUMAN(this));
+
+    camera()->create();
+
     changeStateToMove();
-    camera()->setTarget();
     return 0;
 }
 
-CAMERA* GAME::camera()
+OBJECT* GAME::camera()
 {
-    return (CAMERA*)Objects.at(CameraIdx);
+    return Objects.at(CameraIdx);
 }
 
 OBJECT* GAME::floor()
@@ -97,6 +103,11 @@ OBJECT* GAME::satellite1()
 OBJECT* GAME::satellite2()
 {
     return Objects.at(Satellite2Idx);
+}
+
+OBJECT* GAME::enemy()
+{
+    return Objects.at(EnemyIdx);
 }
 
 OBJECT* GAME::snowMan()
@@ -128,7 +139,7 @@ void GAME::run()
     }
 }
 
-int GAME::CreateObject(OBJECT* object)
+int GAME::AddObject(OBJECT* object)
 {
     Objects.emplace_back(object);
     return (int)Objects.size() - 1;

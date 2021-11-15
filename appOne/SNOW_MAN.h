@@ -9,6 +9,10 @@ class SNOW_MAN : public OBJECT,public GAME_OBJECT{
     CUBE Cube;
     CYLINDER Cylinder;
     CYLINDER TruncatedCone;
+
+    /// <summary>
+    /// 各パーツのモデリング行列
+    /// </summary>
     MATRIX
         BodyMdl, HeadMdl, MouseMdl, EyeMdl, HatMdl;
     MATRIX

@@ -5,6 +5,11 @@ OBJECT::~OBJECT()
 {
 }
 
+int OBJECT::create()
+{
+    return 0;
+}
+
 void OBJECT::update()
 {
 }

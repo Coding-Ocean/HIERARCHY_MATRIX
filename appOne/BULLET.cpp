@@ -23,7 +23,7 @@ void BULLET::update()
         if (Step == -1) {
             Target[0] = game()->satellite1();
             Target[1] = game()->satellite2();
-            Target[2] = game()->snowMan();
+            Target[2] = game()->enemy();
             Step = 0;
         }
         if (Step <= 2) {
@@ -50,4 +50,9 @@ void BULLET::update()
 void BULLET::draw()
 {
     Cone.draw(Master,Color);
+}
+
+int BULLET::finished()
+{
+    return Step == 3;
 }

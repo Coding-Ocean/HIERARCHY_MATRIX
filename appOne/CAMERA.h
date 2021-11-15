@@ -1,29 +1,27 @@
 #pragma once
-#include"VECTOR.h"
+#include "VECTOR.h"
 #include "GAME_OBJECT.h"
 #include "OBJECT.h"
 class CAMERA :
     public GAME_OBJECT, 
     public OBJECT
 {
-    VECTOR CamPos;
-    VECTOR LookPos;
+public:
+    struct DATA {
+        VECTOR angle;
+        float distance = 0;
+        float rotSpeed = 0;
+        float zoomSpeed = 0;
+    };
+private:
+    struct DATA Data;
     VECTOR UpVec;
-    float Longitude = 0;//åoìx(ìåêº)
-    float Latitude = 0;//à‹ìx(ìÏñk)
-    float Radius = 0;
-    float Speed = 0;
-    float PosOffsetY = 0;
-    float ZoomSpeed = 0;
     OBJECT* Target[5];
     int TargetIdx = 0;
     VECTOR TargetPos;
 public:
-    CAMERA(class GAME* game, float distance=17, float zoomSpeed=0.1f);
-    void setTarget();
+    CAMERA(class GAME* game);
+    int create();
     void update();
-    float longitude() {
-        return Longitude;
-    }
 };
 

@@ -21,7 +21,7 @@ void CANNON::update()
         if (dir.x != 0 || dir.z != 0) {
             dir.normalize();
             MATRIX rot;
-            rot.rotateY(game()->camera()->longitude());
+            rot.rotateY(game()->camera()->angle().y);
             dir = rot * dir;
             //ˆÚ“®
             Pos += dir * 0.05f;
