@@ -26,7 +26,7 @@ SATELLITE::SATELLITE(class GAME* game)
 void SATELLITE::update()
 {
     //move
-    if (game()->stateIsMove()) {
+    if (game()->state() == GAME::STATE::MOVE) {
         Pos.z = sin(AngleForPos) * 5;
         if (Id == 0) {
             AngleForPos += AdvSpeed;
@@ -38,16 +38,16 @@ void SATELLITE::update()
     }
 
     //rotate
-    if (game()->stateIsRotate()) {
+    if (game()->state() == GAME::STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
         VECTOR a,b,dir;
         if (Id == 0) {
-            a = game()->object(GAME::OBJ::CANNON)->pos() - Pos;
-            b = game()->object(GAME::OBJ::SATELLITE2)->pos() - Pos;
+            a = game()->object(GAME::OBJ_ID::CANNON)->pos() - Pos;
+            b = game()->object(GAME::OBJ_ID::SATELLITE2)->pos() - Pos;
         }
         else {
-            a = game()->object(GAME::OBJ::SATELLITE1)->pos() - Pos;
-            b = game()->object(GAME::OBJ::ENEMY)->pos() - Pos;
+            a = game()->object(GAME::OBJ_ID::SATELLITE1)->pos() - Pos;
+            b = game()->object(GAME::OBJ_ID::ENEMY)->pos() - Pos;
         }
         a.normalize();
         b.normalize();
@@ -58,12 +58,12 @@ void SATELLITE::update()
         }
     }
 
-    if (game()->stateIsFly()) {
+    if (game()->state() == GAME::STATE::FLY) {
         finishRotating = 0;
     }
 
     //rotateBack
-    if (game()->stateIsRotateBack()) {
+    if (game()->state() == GAME::STATE::ROTATE_BACK) {
         //‰ñ“]
         if (rotate(VECTOR(0,0,1), 0.05f)) {
             finishRotating = 1;

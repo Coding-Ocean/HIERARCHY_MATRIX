@@ -10,20 +10,21 @@ BULLET::BULLET(GAME* game)
 
 void BULLET::update()
 {
-    if (game()->stateIsMove()) {
-        Pos = game()->object(GAME::OBJ::CANNON)->pos();
-        Angle = game()->object(GAME::OBJ::CANNON)->angle();
+    if (game()->state() == GAME::STATE::MOVE) {
+        Pos = game()->object(GAME::OBJ_ID::CANNON)->pos();
+        Angle = game()->object(GAME::OBJ_ID::CANNON)->angle();
+        Step = -1;
     }
 
-    if (game()->stateIsRotate()) {
-        Angle = game()->object(GAME::OBJ::CANNON)->angle();
+    if (game()->state() == GAME::STATE::ROTATE) {
+        Angle = game()->object(GAME::OBJ_ID::CANNON)->angle();
     }
 
-    if (game()->stateIsFly()) {
+    if (game()->state() == GAME::STATE::FLY) {
         if (Step == -1) {
-            Target[0] = game()->object(GAME::OBJ::SATELLITE1);
-            Target[1] = game()->object(GAME::OBJ::SATELLITE2);
-            Target[2] = game()->object(GAME::OBJ::ENEMY);
+            Target[0] = game()->object(GAME::OBJ_ID::SATELLITE1);
+            Target[1] = game()->object(GAME::OBJ_ID::SATELLITE2);
+            Target[2] = game()->object(GAME::OBJ_ID::ENEMY);
             Step = 0;
         }
         if (Step <= 2) {
@@ -35,24 +36,20 @@ void BULLET::update()
                 Step++;
             }
         }
-        else if (isTrigger(KEY_Z)) {
-            Step = -1;
-            game()->changeStateToRotateBack();
-        }
     }
-
-    Master.translate(Pos.x, Pos.y, Pos.z);
-    Master.mulRotateY(Angle.y);
-    Master.mulRotateX(Angle.x);
-    Master.mulScaling(0.6f, 0.6f, 0.6f);
-}
-
-void BULLET::draw()
-{
-    Cone.draw(Master,Color);
 }
 
 int BULLET::finished()
 {
     return Step == 3;
 }
+
+void BULLET::draw()
+{
+    Master.translate(Pos.x, Pos.y, Pos.z);
+    Master.mulRotateY(Angle.y);
+    Master.mulRotateX(Angle.x);
+    Master.mulScaling(0.6f, 0.6f, 0.6f);
+    Cone.draw(Master, Color);
+}
+

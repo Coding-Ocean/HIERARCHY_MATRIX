@@ -17,8 +17,7 @@ ENEMY::ENEMY(GAME* game)
 
 void ENEMY::update()
 {
-    if (game()->object(GAME::OBJ::BULLET)->finished() ||
-        game()->stateIsRotateBack()) {
+    if (game()->object(GAME::OBJ_ID::BULLET)->finished()) {
         AnimAngle = 0;
     }
     else {

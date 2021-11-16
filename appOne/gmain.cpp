@@ -1,7 +1,7 @@
 #include"GAME.h"
 void gmain() {
     GAME* game = new GAME;
-    game->create();
+    game->setup();
     game->run();
     delete game;
 }

@@ -2,8 +2,15 @@
 #include "MODEL.h"
 #include "LIGHT.h"
 
-LIGHT::LIGHT(class GAME* game, float x, float y, float z)
+LIGHT::LIGHT(class GAME* game)
     :GAME_OBJECT(game)
 {
-    MODEL::lightPos = normalize(VECTOR(x,y,z));
+}
+
+int LIGHT::setup()
+{
+    Data = game()->allData.lightData;
+    Pos = Data.objPos;
+    MODEL::lightPos = normalize(Pos);
+    return 0;
 }

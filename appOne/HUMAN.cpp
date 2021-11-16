@@ -28,7 +28,7 @@ HUMAN::HUMAN(class GAME* game)
     Leg2Model.mulTranslate(0, -0.5f, 0);
 }
 void HUMAN::update() {
-    if (game()->stateIsMove()) {
+    if (game()->state() == GAME::STATE::MOVE) {
         Pos.x = 9;
         Pos.y = 0;
         Pos.z = 9;

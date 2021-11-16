@@ -10,52 +10,7 @@
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
 
-OBJECT* GAME::object(OBJ id)
-{
-    return Objects[static_cast<int>(id)];
-}
-
-bool GAME::stateIsMove()
-{
-    return State == MOVE;
-}
-
-bool GAME::stateIsRotate()
-{
-    return State == ROTATE;
-}
-
-bool GAME::stateIsFly()
-{
-    return State == FLY;
-}
-
-bool GAME::stateIsRotateBack()
-{
-    return State == ROTATE_BACK;
-}
-
-void GAME::changeStateToMove()
-{
-    State = MOVE;
-}
-
-void GAME::changeStateToRotate()
-{
-    State = ROTATE;
-}
-
-void GAME::changeStateToFly()
-{
-    State = FLY;
-}
-
-void GAME::changeStateToRotateBack()
-{
-    State = ROTATE_BACK;
-}
-
-int GAME::create()
+int GAME::setup()
 {
     setAllData(allData);
 
@@ -63,27 +18,78 @@ int GAME::create()
     hideCursor();
     
     //Objects
-    AddObject(OBJ::CAMERA, new CAMERA(this));
-    AddObject(OBJ::PROJECTOR, new PROJECTOR(this));
-    AddObject(OBJ::LIGHT, new LIGHT(this, 0, 1, 0.2f));
-    AddObject(OBJ::FLOOR, new FLOOR(this));
-    AddObject(OBJ::CANNON, new CANNON(this));
-    AddObject(OBJ::BULLET, new BULLET(this));
-    AddObject(OBJ::SATELLITE1, new SATELLITE(this));
-    AddObject(OBJ::SATELLITE2, new SATELLITE(this));
-    AddObject(OBJ::ENEMY, new ENEMY(this));
-    AddObject(OBJ::SNOW_MAN, new SNOW_MAN(this));
-    AddObject(OBJ::HUMAN, new HUMAN(this));
+    addObject(OBJ_ID::CAMERA, new CAMERA(this));
+    addObject(OBJ_ID::PROJECTOR, new PROJECTOR(this));
+    addObject(OBJ_ID::LIGHT, new LIGHT(this));
+    addObject(OBJ_ID::FLOOR, new FLOOR(this));
+    addObject(OBJ_ID::CANNON, new CANNON(this));
+    addObject(OBJ_ID::BULLET, new BULLET(this));
+    addObject(OBJ_ID::SATELLITE1, new SATELLITE(this));
+    addObject(OBJ_ID::SATELLITE2, new SATELLITE(this));
+    addObject(OBJ_ID::ENEMY, new ENEMY(this));
+    addObject(OBJ_ID::SNOW_MAN, new SNOW_MAN(this));
+    addObject(OBJ_ID::HUMAN, new HUMAN(this));
 
-    object(GAME::OBJ::CAMERA)->create();
+    for (OBJECT* object : Objects)object->setup();
 
-    changeStateToMove();
+    setState(GAME::STATE::MOVE);
+
     return 0;
 }
 
-//framework----------------------------------------------------------
+OBJECT* GAME::object(OBJ_ID id)
+{
+    return Objects[static_cast<int>(id)];
+}
+
+GAME::STATE GAME::state()
+{
+    return State;
+}
+
+void GAME::setState(STATE state)
+{
+    State = state;
+}
+
+void GAME::stateManager()
+{
+    if (this->state() == GAME::STATE::MOVE) {
+        if (isTrigger(KEY_Z)) {
+            this->setState(GAME::STATE::ROTATE);
+        }
+    }
+
+    if (this->state() == GAME::STATE::ROTATE) {
+        if (finished &&
+            this->object(GAME::OBJ_ID::SATELLITE1)->finished() &&
+            this->object(GAME::OBJ_ID::SATELLITE2)->finished()) {
+            //if (isTrigger(KEY_Z)) 
+                {
+                    this->setState(GAME::STATE::FLY);
+                }
+        }
+    }
+
+    if (this->state() == GAME::STATE::FLY) {
+        if (this->object(GAME::OBJ_ID::BULLET)->finished()) {
+            if (isTrigger(KEY_Z)) {
+                this->setState(GAME::STATE::ROTATE_BACK);
+            }
+        }
+    }
+
+    if (this->state() == GAME::STATE::ROTATE_BACK) {
+        if (finished &&
+            this->object(GAME::OBJ_ID::SATELLITE1)->finished() &&
+            this->object(GAME::OBJ_ID::SATELLITE2)->finished()) {
+            this->setState(GAME::STATE::MOVE);
+        }
+    }
+}
+
 GAME::GAME()
-    :Objects(static_cast<int>(OBJ::NUM_OBJECTS),nullptr)
+    :Objects(static_cast<int>(OBJ_ID::NUM_OBJECTS),nullptr)
 {
 }
 
@@ -101,10 +107,8 @@ void GAME::run()
     }
 }
 
-int GAME::AddObject(OBJ id,OBJECT* object)
+int GAME::addObject(OBJ_ID id,OBJECT* object)
 {
-    //Objects.emplace_back(object);
-    //return (int)Objects.size() - 1;
     Objects[static_cast<int>(id)] = object;
     return static_cast<int>(id);
 }

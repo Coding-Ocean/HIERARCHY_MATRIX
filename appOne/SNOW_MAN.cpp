@@ -17,11 +17,11 @@ SNOW_MAN::SNOW_MAN(GAME* game):
 
 void SNOW_MAN::update()
 {
-    if (game()->stateIsMove()) {
+    if (game()->state() == GAME::STATE::MOVE) {
     }
 
-    if (game()->stateIsRotate()) {
-        VECTOR dir = game()->object(GAME::OBJ::CANNON)->pos() - Pos;;
+    if (game()->state() == GAME::STATE::ROTATE) {
+        VECTOR dir = game()->object(GAME::OBJ_ID::CANNON)->pos() - Pos;;
         rotate(dir, 0.05f);
     }
 

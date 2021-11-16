@@ -7,11 +7,6 @@ FLOOR::FLOOR(GAME* game):
     Color[1].set(64, 128, 64);
 }
 
-void FLOOR::update()
-{
-
-}
-
 void FLOOR::draw()
 {
     for (int z = -3; z <= 3; z++) {

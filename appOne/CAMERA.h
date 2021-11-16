@@ -7,21 +7,20 @@ class CAMERA :
     public OBJECT
 {
 public:
+    CAMERA(class GAME* game);
+    int setup();
+    void update();
     struct DATA {
-        VECTOR angle;
+        VECTOR objAngle;
         float distance = 0;
         float rotSpeed = 0;
         float zoomSpeed = 0;
+        int targetIdx = 0;
     };
 private:
     struct DATA Data;
-    VECTOR UpVec;
     OBJECT* Target[5];
-    int TargetIdx = 0;
     VECTOR TargetPos;
-public:
-    CAMERA(class GAME* game);
-    int create();
-    void update();
+    VECTOR UpVec;
 };
 

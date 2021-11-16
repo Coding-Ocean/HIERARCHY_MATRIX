@@ -6,11 +6,15 @@ class PROJECTOR:
     public OBJECT
 {
 public:
-    PROJECTOR(
-        class GAME* game, 
-        float fov=0.785f, 
-        float aspect=1.7777777f, 
-        float near_=0.1f, 
-        float far_=100.0f);
+    PROJECTOR(class GAME* game);
+    int setup();
+    struct DATA {
+        float fov = 0;
+        float aspect = 0;
+        float near_ = 0;
+        float far_ = 0;
+    };
+private:
+    DATA Data;
 };
 

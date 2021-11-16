@@ -8,16 +8,16 @@ CAMERA::CAMERA(class GAME* game)
 {
 }
 
-int CAMERA::create()
+int CAMERA::setup()
 {
     Data = game()->allData.cameraData;
-    OBJECT::Angle = Data.angle;
+    OBJECT::Angle = Data.objAngle;
 
-    Target[0] = game()->object(GAME::OBJ::FLOOR);
-    Target[1] = game()->object(GAME::OBJ::BULLET);
-    Target[2] = game()->object(GAME::OBJ::SATELLITE1);// object(GAME::OBJ::SATELLITE1();
-    Target[3] = game()->object(GAME::OBJ::SATELLITE2); //object(GAME::OBJ::SATELLITE2();
-    Target[4] = game()->object(GAME::OBJ::ENEMY); //object(GAME::OBJ::ENEMY);
+    Target[0] = game()->object(GAME::OBJ_ID::FLOOR);
+    Target[1] = game()->object(GAME::OBJ_ID::BULLET);
+    Target[2] = game()->object(GAME::OBJ_ID::SATELLITE1);
+    Target[3] = game()->object(GAME::OBJ_ID::SATELLITE2);
+    Target[4] = game()->object(GAME::OBJ_ID::ENEMY);
 
     return 0;
 }
@@ -35,15 +35,15 @@ void CAMERA::update(){
     if (Data.distance < 1.0f) { Data.distance = 1.0f; }
     //ターゲット変更
     if (isTrigger(KEY_C)) {
-        ++TargetIdx %= 5;
-        if (TargetIdx == 0) {
+        ++Data.targetIdx %= 5;
+        if (Data.targetIdx == 0) {
             Data.distance = 17;
         }
         else {
             Data.distance = 6;
         }
     }
-    TargetPos = Target[TargetIdx]->pos();
+    TargetPos = Target[Data.targetIdx]->pos();
     //カメラ位置（３D極座標）
     Pos.x = sin(Angle.y) * cos(Angle.x) * Data.distance + TargetPos.x;
     Pos.y =                sin(Angle.x) * Data.distance + TargetPos.y;

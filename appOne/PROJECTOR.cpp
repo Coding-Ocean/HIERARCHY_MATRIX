@@ -1,7 +1,16 @@
-#include"MODEL.h"
+#include "GAME.h"
+#include "MODEL.h"
 #include "PROJECTOR.h"
-PROJECTOR::PROJECTOR(class GAME* game, float fov, float aspect, float near_, float far_)
-:GAME_OBJECT(game)
+
+PROJECTOR::PROJECTOR(class GAME* game)
+    :GAME_OBJECT(game)
 {
-    MODEL::proj.pers(fov, aspect, near_, far_);
 }
+
+int PROJECTOR::setup()
+{
+    Data = game()->allData.projectorData;
+    MODEL::proj.pers(Data.fov, Data.aspect, Data.near_, Data.far_);
+    return 0;
+}
+

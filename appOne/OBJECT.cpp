@@ -5,7 +5,7 @@ OBJECT::~OBJECT()
 {
 }
 
-int OBJECT::create()
+int OBJECT::setup()
 {
     return 0;
 }

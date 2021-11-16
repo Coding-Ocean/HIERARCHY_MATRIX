@@ -12,7 +12,6 @@ class FLOOR :
     COLOR Color[2];
 public:
     FLOOR(class GAME* game);
-    void update();
     void draw();
 };
 

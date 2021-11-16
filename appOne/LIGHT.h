@@ -6,6 +6,12 @@ class LIGHT :
     public OBJECT
 {
 public:
-    LIGHT(class GAME* game, float x=0, float y=0, float z=1);
+    LIGHT(class GAME* game);
+    int setup();
+    struct DATA {
+        VECTOR objPos;
+    };
+private:
+    DATA Data;
 };
 
