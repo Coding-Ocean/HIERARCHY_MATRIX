@@ -15,8 +15,10 @@ public:
     void update();
     void draw();
     int finished();
+    VECTOR pos();
     struct DATA {
-        VECTOR objPos;
+        VECTOR pos;
+        VECTOR angle;
         COLOR wheelColor;
         COLOR bodyColor;
         float ambient;
@@ -31,4 +33,3 @@ private:
     class BARREL* Barrel;
     MATRIX Master, WheelL, WheelR, Body;
 };
-

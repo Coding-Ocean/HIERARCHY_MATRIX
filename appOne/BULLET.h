@@ -6,15 +6,25 @@ class BULLET :
     public GAME_OBJECT,
     public OBJECT
 {
-    CONE Cone;
-    MATRIX Master;
-    COLOR Color;
-    int Step = -1;
-    OBJECT* Target[3];
 public:
     BULLET(class GAME* game);
+    ~BULLET();
+    int setup();
     void update();
     void draw();
     int finished();
+    struct DATA {
+        VECTOR pos;
+        VECTOR angle;
+        COLOR color;
+        int numTargets;
+        GAME::OBJ_ID objId[8];
+    };
+private:
+    DATA Data;
+    CONE* Cone;
+    MATRIX Master;
+    OBJECT** Targets;
+    int Step = 0;
 };
 

@@ -2,17 +2,14 @@
 #include"VECTOR.h"
 class OBJECT
 {
-protected:
-    VECTOR Pos;
-    VECTOR Angle;
 public:
     virtual ~OBJECT();
     virtual int setup();
     virtual void update();
     virtual void draw();
     virtual int finished();
-    int rotate(const VECTOR& b, float speed);
-    VECTOR pos();
-    VECTOR angle();
+    virtual VECTOR pos();
+    virtual VECTOR angle();
+    int rotate(VECTOR* angle, const VECTOR& dir, float speed);
 };
 

@@ -14,11 +14,18 @@ void setAllData(ALL_DATA& allData)
 
     allData.lightData.objPos.set(0, 1, 0);
 
-    allData.cannonData.objPos.set(-3, 0.8f, 0);
+    allData.cannonData.pos.set(-3, 0.8f, 0);
     allData.cannonData.advSpeed = 0.05f;
     allData.cannonData.advRotSpeed = 0.25f;
     allData.cannonData.rotSpeed = 0.05f;
     allData.cannonData.wheelColor.set(150, 0, 150);
     allData.cannonData.bodyColor.set(255, 150, 150);
     allData.cannonData.ambient = 0.3f;
+
+    allData.bulletData.color.set(255, 60, 60);
+    allData.bulletData.numTargets = 3;//ç≈ëÂÇW
+    allData.bulletData.objId[0] = GAME::OBJ_ID::SATELLITE1;
+    allData.bulletData.objId[1] = GAME::OBJ_ID::SATELLITE2;
+    allData.bulletData.objId[2] = GAME::OBJ_ID::ENEMY;
+
 }

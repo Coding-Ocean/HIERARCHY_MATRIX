@@ -1,38 +1,49 @@
-#include "GAME.h"
 #include "BULLET.h"
 
 BULLET::BULLET(GAME* game)
     :GAME_OBJECT(game)
-    , Cone(36, 1)
 {
-    Color.set(255, 60, 60);
+}
+
+BULLET::~BULLET()
+{
+    SAFE_DELETE(Cone);
+    SAFE_DELETE_ARRAY(Targets);
+}
+
+int BULLET::setup()
+{
+    Data = game()->allData.bulletData;
+    
+    Targets = new OBJECT * [Data.numTargets];
+    for (int i = 0; i < Data.numTargets; i++) {
+        Targets[i] = game()->object(Data.objId[i]);
+    }
+
+    Cone = new CONE;
+
+    return 0;
 }
 
 void BULLET::update()
 {
     if (game()->state() == GAME::STATE::MOVE) {
-        Pos = game()->object(GAME::OBJ_ID::CANNON)->pos();
-        Angle = game()->object(GAME::OBJ_ID::CANNON)->angle();
-        Step = -1;
+        Data.pos = game()->object(GAME::OBJ_ID::CANNON)->pos();
+        Data.angle = game()->object(GAME::OBJ_ID::CANNON)->angle();
+        Step = 0;
     }
 
     if (game()->state() == GAME::STATE::ROTATE) {
-        Angle = game()->object(GAME::OBJ_ID::CANNON)->angle();
+        Data.angle = game()->object(GAME::OBJ_ID::CANNON)->angle();
     }
 
     if (game()->state() == GAME::STATE::FLY) {
-        if (Step == -1) {
-            Target[0] = game()->object(GAME::OBJ_ID::SATELLITE1);
-            Target[1] = game()->object(GAME::OBJ_ID::SATELLITE2);
-            Target[2] = game()->object(GAME::OBJ_ID::ENEMY);
-            Step = 0;
-        }
-        if (Step <= 2) {
-            VECTOR dir = Target[Step]->pos() - Pos;
+        if (Step < Data.numTargets) {
+            VECTOR dir = Targets[Step]->pos() - Data.pos;
             float len = dir.mag();
-            Pos += dir.normalize() * 0.2f;
-            rotate(dir, 1);
+            Data.pos += dir.normalize() * 0.2f;
             if (len < 0.3f) {
+                rotate(&Data.angle, dir, 1);
                 Step++;
             }
         }
@@ -41,15 +52,15 @@ void BULLET::update()
 
 int BULLET::finished()
 {
-    return Step == 3;
+    return Step == Data.numTargets;
 }
 
 void BULLET::draw()
 {
-    Master.translate(Pos.x, Pos.y, Pos.z);
-    Master.mulRotateY(Angle.y);
-    Master.mulRotateX(Angle.x);
+    Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);
+    Master.mulRotateY(Data.angle.y);
+    Master.mulRotateX(Data.angle.x);
     Master.mulScaling(0.6f, 0.6f, 0.6f);
-    Cone.draw(Master, Color);
+    Cone->draw(Master, Data.color);
 }
 

@@ -19,7 +19,6 @@ int CANNON::setup()
 {
     //Data
     Data = game()->allData.cannonData;
-    Pos = Data.objPos;
     //Model
     Cylinder = new CYLINDER(36, 0, -0.2f);
     Barrel = new BARREL;
@@ -42,29 +41,29 @@ void CANNON::update()
             rot.rotateY(game()->object(GAME::OBJ_ID::CAMERA)->angle().y);
             dir = rot * dir;
             //ˆÚ“®
-            Pos += dir * Data.advSpeed;
+            Data.pos += dir * Data.advSpeed;
             //‰ñ“]
-            rotate(dir, Data.advRotSpeed);
+            rotate(&Data.angle, dir, Data.advRotSpeed);
         }
     }
 
     if (game()->state()==GAME::STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
-        VECTOR dir = game()->object(GAME::OBJ_ID::SATELLITE1)->pos() - Pos;
-        finishRotating = rotate(dir, Data.rotSpeed);
+        VECTOR dir = game()->object(GAME::OBJ_ID::SATELLITE1)->pos() - Data.pos;
+        finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
     }
     
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
         VECTOR dir(0, 0, 1);
-        finishRotating = rotate(dir, Data.rotSpeed);
+        finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
     }
 }
 
 void CANNON::draw() 
 {
     Master.identity();
-    Master.mulTranslate(Pos.x, Pos.y, Pos.z);
-    Master.mulRotateY(Angle.y);
+    Master.mulTranslate(Data.pos.x, Data.pos.y, Data.pos.z);
+    Master.mulRotateY(Data.angle.y);
     WheelL.identity();
     WheelL.mulTranslate(0.5f, -0.3f, 0);
     WheelL.mulRotateY(-1.57f);
@@ -73,7 +72,7 @@ void CANNON::draw()
     WheelR.mulRotateY(1.57f);
     Body.identity();
     Body.mulTranslate(0, 0, 0);
-    Body.mulRotateX(Angle.x);
+    Body.mulRotateX(Data.angle.x);
 
     WheelL = Master * WheelL;
     Cylinder->draw(WheelL, Data.wheelColor, Data.ambient);
@@ -87,3 +86,10 @@ int CANNON::finished()
 {
     return finishRotating;
 }
+
+VECTOR CANNON::pos()
+{
+    return Data.pos;
+}
+
+
