@@ -45,7 +45,7 @@ int OBJECT::rotate(const VECTOR& dir, float speed)
     float crossProduct = a.x * b.z - a.z * b.x;
     float angleBetweenY = atan2(-crossProduct, dotProduct);
     Angle.y += angleBetweenY * speed;
-    //return rotation finished
+    //âÒì]èIóπ
     if (-0.02f < angleBetweenY && angleBetweenY <0.02f) {
         return 1;
     }

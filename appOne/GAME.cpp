@@ -32,7 +32,7 @@ int GAME::setup()
 
     for (OBJECT* object : Objects)object->setup();
 
-    setState(GAME::STATE::MOVE);
+    State = GAME::STATE::MOVE;
 
     return 0;
 }
@@ -47,43 +47,39 @@ GAME::STATE GAME::state()
     return State;
 }
 
-void GAME::setState(STATE state)
-{
-    State = state;
-}
-
 void GAME::stateManager()
 {
-    if (this->state() == GAME::STATE::MOVE) {
+    if (State == GAME::STATE::MOVE) {
         if (isTrigger(KEY_Z)) {
-            this->setState(GAME::STATE::ROTATE);
+            State = GAME::STATE::ROTATE;
         }
     }
 
-    if (this->state() == GAME::STATE::ROTATE) {
-        if (finished &&
-            this->object(GAME::OBJ_ID::SATELLITE1)->finished() &&
-            this->object(GAME::OBJ_ID::SATELLITE2)->finished()) {
+    else if (State == GAME::STATE::ROTATE) {
+        if (object(GAME::OBJ_ID::CANNON)->finished() &&
+            object(GAME::OBJ_ID::SATELLITE1)->finished() &&
+            object(GAME::OBJ_ID::SATELLITE2)->finished()) {
             //if (isTrigger(KEY_Z)) 
-                {
-                    this->setState(GAME::STATE::FLY);
-                }
-        }
-    }
-
-    if (this->state() == GAME::STATE::FLY) {
-        if (this->object(GAME::OBJ_ID::BULLET)->finished()) {
-            if (isTrigger(KEY_Z)) {
-                this->setState(GAME::STATE::ROTATE_BACK);
+            {
+                State = GAME::STATE::FLY;
+                Count = 0;
             }
         }
     }
 
-    if (this->state() == GAME::STATE::ROTATE_BACK) {
-        if (finished &&
-            this->object(GAME::OBJ_ID::SATELLITE1)->finished() &&
-            this->object(GAME::OBJ_ID::SATELLITE2)->finished()) {
-            this->setState(GAME::STATE::MOVE);
+    else if (State == GAME::STATE::FLY) {
+        if (object(GAME::OBJ_ID::BULLET)->finished()) {
+            if (++Count > 90) {
+                State = GAME::STATE::ROTATE_BACK;
+            }
+        }
+    }
+
+    else if (State == GAME::STATE::ROTATE_BACK) {
+        if (object(GAME::OBJ_ID::CANNON)->finished() &&
+            object(GAME::OBJ_ID::SATELLITE1)->finished() &&
+            object(GAME::OBJ_ID::SATELLITE2)->finished()) {
+            State = GAME::STATE::MOVE;
         }
     }
 }
@@ -104,6 +100,7 @@ void GAME::run()
         clear(64,128,255);
         for (OBJECT* object : Objects)object->update();
         for (OBJECT* object : Objects)object->draw();
+        stateManager();
     }
 }
 

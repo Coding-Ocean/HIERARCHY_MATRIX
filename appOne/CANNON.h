@@ -14,6 +14,7 @@ public:
     int setup();
     void update();
     void draw();
+    int finished();
     struct DATA {
         VECTOR objPos;
         COLOR wheelColor;
@@ -25,6 +26,7 @@ public:
     };
 private:
     DATA Data;
+    int finishRotating = 0;
     class CYLINDER* Cylinder;
     class BARREL* Barrel;
     MATRIX Master, WheelL, WheelR, Body;

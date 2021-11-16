@@ -29,8 +29,6 @@ int CANNON::setup()
 
 void CANNON::update()
 {
-    //state‚ÌØ‚è‘Ö‚¦‚Í‚±‚±‚Å‚Ì‚Ýs‚¤I
-
     if (game()->state()==GAME::STATE::MOVE) {
         //ˆÚ“®•ûŒü‚ðŒˆ‚ß‚é
         VECTOR dir(0, 0, 0);
@@ -48,42 +46,17 @@ void CANNON::update()
             //‰ñ“]
             rotate(dir, Data.advRotSpeed);
         }
-        //next
-        if (isTrigger(KEY_Z)) {
-            game()->setState(GAME::STATE::ROTATE);
-        }
     }
 
     if (game()->state()==GAME::STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
         VECTOR dir = game()->object(GAME::OBJ_ID::SATELLITE1)->pos() - Pos;
-        int finished = rotate(dir, Data.rotSpeed);
-        //‰ñ“]I—¹
-        if ( finished &&
-            game()->object(GAME::OBJ_ID::SATELLITE1)->finished() &&
-            game()->object(GAME::OBJ_ID::SATELLITE2)->finished()) {
-            //if (isTrigger(KEY_Z)) 
-            {
-                game()->setState(GAME::STATE::FLY);
-            }
-        }
-    }
-
-    if (game()->state() == GAME::STATE::FLY) {
-        if (game()->object(GAME::OBJ_ID::BULLET)->finished()) {
-            if (isTrigger(KEY_Z)) {
-                game()->setState(GAME::STATE::ROTATE_BACK);
-            }
-        }
+        finishRotating = rotate(dir, Data.rotSpeed);
     }
     
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
-        int finished = rotate(VECTOR(0, 0, 1), Data.rotSpeed);
-        if ( finished &&
-            game()->object(GAME::OBJ_ID::SATELLITE1)->finished() &&
-            game()->object(GAME::OBJ_ID::SATELLITE2)->finished()) {
-            game()->setState(GAME::STATE::MOVE);
-        }
+        VECTOR dir(0, 0, 1);
+        finishRotating = rotate(dir, Data.rotSpeed);
     }
 }
 
@@ -110,4 +83,7 @@ void CANNON::draw()
     Barrel->draw(Body,Data.bodyColor, Data.ambient);
 }
 
-
+int CANNON::finished()
+{
+    return finishRotating;
+}

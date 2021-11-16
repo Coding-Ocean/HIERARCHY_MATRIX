@@ -34,10 +34,8 @@ void SATELLITE::update()
         else {
             AngleForPos += -AdvSpeed;
         }
-        finishRotating = 0;
     }
 
-    //rotate
     if (game()->state() == GAME::STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
         VECTOR a,b,dir;
@@ -53,21 +51,12 @@ void SATELLITE::update()
         b.normalize();
         dir = a + b;
         //‰ñ“]
-        if (rotate(dir, 0.05f)) {
-            finishRotating = 1;
-        }
+        finishRotating = rotate(dir, 0.05f);
     }
 
-    if (game()->state() == GAME::STATE::FLY) {
-        finishRotating = 0;
-    }
-
-    //rotateBack
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
         //‰ñ“]
-        if (rotate(VECTOR(0,0,1), 0.05f)) {
-            finishRotating = 1;
-        }
+        finishRotating = rotate(VECTOR(0, 0, 1), 0.05f);
     }
 
     //create matrix

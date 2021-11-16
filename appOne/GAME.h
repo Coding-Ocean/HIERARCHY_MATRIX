@@ -24,9 +24,9 @@ public:
     //States
     enum class STATE { MOVE, ROTATE, FLY, ROTATE_BACK };
     STATE state();
-    void setState(STATE state);
     void stateManager();
 private:
     std::vector<class OBJECT*> Objects;
     STATE State;
+    int Count;
 };
