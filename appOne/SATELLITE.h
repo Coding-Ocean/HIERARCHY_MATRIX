@@ -27,7 +27,7 @@ public:
         float refAmbient;
         float moveRange;
         float animSpeed;
-        int finishFlag;
+        int endOfRotationFlag;
     };
 private:
     static int Num;

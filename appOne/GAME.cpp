@@ -9,6 +9,15 @@
 #include "ENEMY.h"
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
+GAME::GAME()
+    :Objects(static_cast<int>(OBJ_ID::NUM_OBJECTS), nullptr)
+{
+}
+
+GAME::~GAME()
+{
+    for (OBJECT* object : Objects)SAFE_DELETE(object);
+}
 
 int GAME::setup()
 {
@@ -37,14 +46,20 @@ int GAME::setup()
     return 0;
 }
 
-OBJECT* GAME::object(OBJ_ID id)
+int GAME::addObject(OBJ_ID id, OBJECT* object)
 {
-    return Objects[static_cast<int>(id)];
+    Objects[static_cast<int>(id)] = object;
+    return static_cast<int>(id);
 }
 
-GAME::STATE GAME::state()
+void GAME::run()
 {
-    return State;
+    while (notQuit) {
+        clear(0, 0, 40);
+        for (OBJECT* object : Objects)object->update();
+        for (OBJECT* object : Objects)object->draw();
+        stateManager();
+    }
 }
 
 void GAME::stateManager()
@@ -79,28 +94,13 @@ void GAME::stateManager()
     }
 }
 
-GAME::GAME()
-    :Objects(static_cast<int>(OBJ_ID::NUM_OBJECTS),nullptr)
+OBJECT* GAME::object(OBJ_ID id)
 {
+    return Objects[static_cast<int>(id)];
 }
 
-GAME::~GAME()
+GAME::STATE GAME::state()
 {
-    for (OBJECT* object : Objects)delete object;
+    return State;
 }
 
-void GAME::run()
-{
-    while (notQuit) {
-        clear(0,0,40);
-        for (OBJECT* object : Objects)object->update();
-        for (OBJECT* object : Objects)object->draw();
-        stateManager();
-    }
-}
-
-int GAME::addObject(OBJ_ID id,OBJECT* object)
-{
-    Objects[static_cast<int>(id)] = object;
-    return static_cast<int>(id);
-}

@@ -52,16 +52,12 @@ void CANNON::update()
     if (game()->state()==GAME::STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
         VECTOR dir = Target->pos() - Data.pos;
-        if (rotate(&Data.angle, dir, Data.rotSpeed)) {
-            EndOfRotationFlags |= Data.finishFlag;
-        }
+        rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
     }
     
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
         VECTOR dir(0, 0, 1);
-        if (rotate(&Data.angle, dir, Data.rotSpeed)) {
-            EndOfRotationFlags |= Data.finishFlag;
-        }
+        rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
     }
 
     Master.identity();

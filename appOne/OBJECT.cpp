@@ -44,7 +44,7 @@ VECTOR OBJECT::angle()
     return VECTOR();
 }
 
-int OBJECT::rotate(VECTOR* angle, const VECTOR& dir, float speed)
+int OBJECT::rotate(VECTOR* angle, const VECTOR& dir, float speed, int endOfRotationFlag)
 {
     //‚w²‰ñ“]
     VECTOR b = normalize(dir);
@@ -58,6 +58,7 @@ int OBJECT::rotate(VECTOR* angle, const VECTOR& dir, float speed)
     angle->y += angleBetweenY * speed;
     //‰ñ“]I—¹
     if (-0.02f < angleBetweenY && angleBetweenY <0.02f) {
+        EndOfRotationFlags |= endOfRotationFlag;
         return 1;
     }
     return 0;

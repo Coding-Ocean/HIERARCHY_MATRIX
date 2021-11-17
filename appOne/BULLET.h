@@ -19,6 +19,7 @@ public:
         VECTOR pos;
         VECTOR angle;
         float advSpeed;
+        float rotSpeed;
         COLOR color;
         float ambient;
         int numTargets;

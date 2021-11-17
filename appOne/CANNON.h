@@ -26,7 +26,7 @@ public:
         float advSpeed;
         float advRotSpeed;
         float rotSpeed;
-        int finishFlag;
+        int endOfRotationFlag;
         OBJ_ID objId;
     };
 private:
