@@ -56,9 +56,9 @@ void GAME::stateManager()
     }
 
     else if (State == GAME::STATE::ROTATE) {
-        if (object(GAME::OBJ_ID::CANNON)->finished() &&
-            object(GAME::OBJ_ID::SATELLITE1)->finished() &&
-            object(GAME::OBJ_ID::SATELLITE2)->finished()) {
+        if (object(OBJ_ID::CANNON)->finished() &&
+            object(OBJ_ID::SATELLITE1)->finished() &&
+            object(OBJ_ID::SATELLITE2)->finished()) {
             //if (isTrigger(KEY_Z)) 
             {
                 State = GAME::STATE::FLY;
@@ -68,7 +68,7 @@ void GAME::stateManager()
     }
 
     else if (State == GAME::STATE::FLY) {
-        if (object(GAME::OBJ_ID::BULLET)->finished()) {
+        if (object(OBJ_ID::BULLET)->finished()) {
             if (++Count > 90) {
                 State = GAME::STATE::ROTATE_BACK;
             }
@@ -76,9 +76,9 @@ void GAME::stateManager()
     }
 
     else if (State == GAME::STATE::ROTATE_BACK) {
-        if (object(GAME::OBJ_ID::CANNON)->finished() &&
-            object(GAME::OBJ_ID::SATELLITE1)->finished() &&
-            object(GAME::OBJ_ID::SATELLITE2)->finished()) {
+        if (object(OBJ_ID::CANNON)->finished() &&
+            object(OBJ_ID::SATELLITE1)->finished() &&
+            object(OBJ_ID::SATELLITE2)->finished()) {
             State = GAME::STATE::MOVE;
         }
     }
@@ -97,7 +97,7 @@ GAME::~GAME()
 void GAME::run()
 {
     while (notQuit) {
-        clear(64,128,255);
+        clear(0,0,40);
         for (OBJECT* object : Objects)object->update();
         for (OBJECT* object : Objects)object->draw();
         stateManager();

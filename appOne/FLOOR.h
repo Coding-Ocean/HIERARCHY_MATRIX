@@ -7,11 +7,19 @@ class FLOOR :
     public GAME_OBJECT,
     public OBJECT
 {
-    PLANE Plane;
-    MATRIX World;
-    COLOR Color[2];
 public:
     FLOOR(class GAME* game);
+    int setup();
     void draw();
+    VECTOR pos();
+    struct DATA {
+        VECTOR pos;
+        VECTOR angle;
+        COLOR color[2];
+    };
+private:
+    DATA Data;
+    PLANE Plane;
+    MATRIX World;
 };
 

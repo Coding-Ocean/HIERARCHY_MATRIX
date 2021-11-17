@@ -57,8 +57,8 @@ void MODEL::draw(const MATRIX& world, const COLOR& color, float ambient)
         //êFÅEñæÇÈÇ≥
         if (Lighting) {
             normal = normalize(mRS * ONormals[i]);
-            //float bright = max(ambient, dot(normal, lightPos));
-            float bright = max(0.5f, dot(normal, lightPos));
+            float bright = max(ambient, dot(normal, lightPos));
+            //float bright = max(0.5f, dot(normal, lightPos));
             if (ColorMode == RGB) {
                 Colors[i] = color * bright;
             }

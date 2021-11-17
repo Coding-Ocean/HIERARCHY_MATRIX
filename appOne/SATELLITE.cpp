@@ -4,88 +4,78 @@ int SATELLITE::Num = 0;
 
 SATELLITE::SATELLITE(class GAME* game) 
     :GAME_OBJECT(game)
-    ,Cylinder(36, 0, -1.5f)
 {
-    Ambient = 0.4f;
-    BodyColor.set(255, 255, 0);
-    SquareColor.set(255, 200, 60);
-    WingModel.scaling(0.7f, 1.1f, 1.0f);
-    AdvSpeed = 0.01f;
-
     Id = Num;
-    if (Id == 0) {
-        Pos.set(4, 5, 0);
-    }
-    else{
-        Pos.set(-4, 6, 0);
-    }
-
     Num++;
+}
+
+SATELLITE::~SATELLITE() {
+    SAFE_DELETE(Cylinder);
+}
+
+int SATELLITE::setup()
+{
+    Data = game()->allData.satelliteData[Id];
+
+    Cylinder = new CYLINDER(36, 0, -1.5f);
+
+    WingModel.scaling(0.7f, 1.1f, 1.0f);
+
+    return 0;
 }
 
 void SATELLITE::update()
 {
-    //move
     if (game()->state() == GAME::STATE::MOVE) {
-        Pos.z = sin(AngleForPos) * 5;
-        if (Id == 0) {
-            AngleForPos += AdvSpeed;
-        }
-        else {
-            AngleForPos += -AdvSpeed;
-        }
+        Data.pos.z = sin(AngleForPos) * Data.moveRange;
+        AngleForPos += Data.advSpeed;
     }
 
     if (game()->state() == GAME::STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
-        VECTOR a,b,dir;
-        if (Id == 0) {
-            a = game()->object(GAME::OBJ_ID::CANNON)->pos() - Pos;
-            b = game()->object(GAME::OBJ_ID::SATELLITE2)->pos() - Pos;
-        }
-        else {
-            a = game()->object(GAME::OBJ_ID::SATELLITE1)->pos() - Pos;
-            b = game()->object(GAME::OBJ_ID::ENEMY)->pos() - Pos;
-        }
+        //”ò‚ñ‚Å—ˆ‚½•ûŒüa‚Æ”ò‚ñ‚Ås‚­•ûŒüb‚ð‚Q•ª‚µ‚½•ûŒüdir‚ð‹‚ß‚é
+        VECTOR a = game()->object(Data.preObjId)->pos() - Data.pos;
+        VECTOR b = game()->object(Data.postObjId)->pos() - Data.pos;
         a.normalize();
         b.normalize();
-        dir = a + b;
+        VECTOR dir = a + b;
         //‰ñ“]
-        finishRotating = rotate(dir, 0.05f);
+        finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
     }
 
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
         //‰ñ“]
-        finishRotating = rotate(VECTOR(0, 0, 1), 0.05f);
+        finishRotating = rotate(&Data.angle, VECTOR(0, 0, 1), Data.rotSpeed);
     }
 
-    //create matrix
+    Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);
+    Master.mulRotateY(Data.angle.y);
+    Master.mulRotateX(Data.angle.x);
     Ref.translate(0, 0, 0.001f);
     Ref.mulRotateZ(AnimAngle);
     Ref.mulScaling(1.1f, 1.1f, 0.0f);
-    WingL.translate( 0.85f, 0, -1.0f);
+    WingL.translate(0.85f, 0, -1.0f);
     WingL.mulRotateX(AnimAngle);
     WingR.translate(-0.85f, 0, -1.0f);
     WingR.mulRotateX(AnimAngle);
-    AnimAngle += 0.017f;
+    AnimAngle += Data.animSpeed;
 }
 
 void SATELLITE::draw()
 {
-    Master.translate(Pos.x, Pos.y, Pos.z);
-    Master.mulRotateY(Angle.y);
-    Master.mulRotateX(Angle.x);
-
-    Cylinder.draw(Master,BodyColor,Ambient);
     
+    Cylinder->draw(Master, Data.bodyColor, Data.ambient);
     Ref = Master * Ref;
-    Square.draw(Ref,SquareColor,Ambient);
-
+    Square.draw(Ref, Data.squareColor, Data.ambient);
     WingL = Master * WingL;
-    Square.draw(WingL*WingModel,SquareColor,Ambient);
-
+    Square.draw(WingL * WingModel, Data.squareColor, Data.ambient);
     WingR = Master * WingR;
-    Square.draw(WingR*WingModel, SquareColor, Ambient);
+    Square.draw(WingR * WingModel, Data.squareColor, Data.ambient);
+}
+
+VECTOR SATELLITE::pos()
+{
+    return Data.pos;
 }
 
 int SATELLITE::finished()

@@ -194,6 +194,7 @@
     <ClInclude Include="LIGHT.h" />
     <ClInclude Include="MODEL.h" />
     <ClInclude Include="OBJECT.h" />
+    <ClInclude Include="OBJ_ID.h" />
     <ClInclude Include="PLANE.h" />
     <ClInclude Include="POLYGON.h" />
     <ClInclude Include="PRISM.h" />

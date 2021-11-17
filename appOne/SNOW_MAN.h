@@ -5,10 +5,25 @@
 #include"CYLINDER.h"
 #include"CUBE.h"
 class SNOW_MAN : public OBJECT,public GAME_OBJECT{
+public:
+    SNOW_MAN(class GAME* game);
+    ~SNOW_MAN();
+    int setup();
+    void update();
+    void draw();
+    VECTOR pos();
+    struct DATA {
+        VECTOR pos;
+        VECTOR angle;
+        float ambient;
+    };
+private:
+    DATA Data;
+
     SPHERE Sphere;
     CUBE Cube;
     CYLINDER Cylinder;
-    CYLINDER TruncatedCone;
+    CYLINDER* TruncatedCone;
 
     /// <summary>
     /// 各パーツのモデリング行列
@@ -17,18 +32,12 @@ class SNOW_MAN : public OBJECT,public GAME_OBJECT{
         BodyMdl, HeadMdl, MouseMdl, EyeMdl, HatMdl;
     MATRIX
         Master,
-        Body,
-        Head,
-        Mouse,
-        EyeR,
-        EyeL,
-        Hat
-        ;
-    float angle = 0;
-    float Theta = 0;//位置決め用アングル
-public:
-    SNOW_MAN(class GAME* game);
-    void update();
-    void draw();
+            Body,
+            Head,
+                Mouse,
+                EyeR,
+                EyeL,
+                Hat;
+    float animAngle = 0;
 };
 

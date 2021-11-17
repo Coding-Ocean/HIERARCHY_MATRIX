@@ -3,6 +3,11 @@
 HUMAN::HUMAN(class GAME* game)
     :GAME_OBJECT(game)
 {
+}
+int HUMAN::setup()
+{
+    Data = game()->allData.humanData;
+
     //上半身パーツのモデリング
     BodyModel.scaling(0.4f, 0.4f, 0.25f);
     BodyModel.mulTranslate(0, 0.5f, 0);
@@ -26,24 +31,26 @@ HUMAN::HUMAN(class GAME* game)
     Leg1Model.mulTranslate(0, -0.5f, 0);
     Leg2Model.scaling(0.048f, 0.5f, 0.05f);
     Leg2Model.mulTranslate(0, -0.5f, 0);
+
+    return 0;
 }
 void HUMAN::update() {
     if (game()->state() == GAME::STATE::MOVE) {
-        Pos.x = 9;
-        Pos.y = 0;
-        Pos.z = 9;
-        angle += 0.06f;
+        animAngle += Data.animSpeed;
     }
 
     //回転係数
-    float s = sin(angle);
-    float c0_2 = 1 - cos(angle * 2);
+    float s = sin(animAngle);
+    float c0_2 = 1 - cos(animAngle * 2);
     float s_ntoz = s < 0 ? 0 : s;
     float ns = -s;
     float ns_ntoz = ns < 0 ? 0 : ns;
     //行列をつくる
-    Master.translate(Pos.x, Pos.y+0.01f + 0.1f * c0_2, Pos.z);
-
+    Master.translate(
+        Data.pos.x, 
+        Data.pos.y+0.01f + 0.1f * c0_2, 
+        Data.pos.z
+    );
     Body.translate(0, 1.2f, 0);
     Body.mulRotateY(0.6f * ns);
     Body.mulRotateX(0.4f * c0_2);
@@ -77,35 +84,33 @@ void HUMAN::update() {
     Leg2L.translate(0, -0.5f, 0);
     Leg2L.mulRotateX(1.8f * ns_ntoz);
 }
-void HUMAN::draw() {
-    //色
-    COLOR c1 = COLOR(62, 66, 163);
-    COLOR c2 = COLOR(217, 169, 132);
-    COLOR c3 = COLOR(0, 0, 0);
-    COLOR c4 = COLOR(255, 100, 100);
-    COLOR c5 = COLOR(220, 0, 0);
-    float ambient = 0.7f;
 
+void HUMAN::draw() {
     Body = Master * Body;
-    Cube.draw(Body * BodyModel, c1, ambient);
+    Cube.draw(Body * BodyModel, Data.c1, Data.ambient);
     Neck = Body * Neck;
-    Cube.draw(Neck * NeckModel, c2, ambient);
+    Cube.draw(Neck * NeckModel, Data.c2, Data.ambient);
     Head = Neck * Head;
-    Cube.draw(Head * HeadModel, c2, ambient);
-    Cube.draw(Head * Mouse * MouseModel, c4, ambient);
-    Cube.draw(Head * EyeR * EyeModel, c3, ambient);
-    Cube.draw(Head * EyeL * EyeModel, c3, ambient);
-    Cube.draw(Head * Hair * HairModel, c5, ambient);
+    Cube.draw(Head * HeadModel, Data.c2, Data.ambient);
+    Cube.draw(Head * Mouse * MouseModel, Data.c4, Data.ambient);
+    Cube.draw(Head * EyeR * EyeModel, Data.c3, Data.ambient);
+    Cube.draw(Head * EyeL * EyeModel, Data.c3, Data.ambient);
+    Cube.draw(Head * Hair * HairModel, Data.c5, Data.ambient);
     Arm1R = Body * Arm1R;
-    Cube.draw(Arm1R * Arm1Model, c1, ambient);
-    Cube.draw(Arm1R * Arm2R * Arm2Model, c2, ambient);
+    Cube.draw(Arm1R * Arm1Model, Data.c1, Data.ambient);
+    Cube.draw(Arm1R * Arm2R * Arm2Model, Data.c2, Data.ambient);
     Arm1L = Body * Arm1L;
-    Cube.draw(Arm1L * Arm1Model, c1, ambient);
-    Cube.draw(Arm1L * Arm2L * Arm2Model, c2, ambient);
+    Cube.draw(Arm1L * Arm1Model, Data.c1, Data.ambient);
+    Cube.draw(Arm1L * Arm2L * Arm2Model, Data.c2, Data.ambient);
     Waist = Master * Waist;
-    Cube.draw(Waist * WaistModel, c1, ambient);
-    Cube.draw(Waist * Leg1R * Leg1Model, c1, ambient);
-    Cube.draw(Waist * Leg1R * Leg2R * Leg2Model, c2, ambient);
-    Cube.draw(Waist * Leg1L * Leg1Model, c1, ambient);
-    Cube.draw(Waist * Leg1L * Leg2L * Leg2Model, c2, ambient);
+    Cube.draw(Waist * WaistModel, Data.c1, Data.ambient);
+    Cube.draw(Waist * Leg1R * Leg1Model, Data.c1, Data.ambient);
+    Cube.draw(Waist * Leg1R * Leg2R * Leg2Model, Data.c2, Data.ambient);
+    Cube.draw(Waist * Leg1L * Leg1Model, Data.c1, Data.ambient);
+    Cube.draw(Waist * Leg1L * Leg2L * Leg2Model, Data.c2, Data.ambient);
+}
+
+VECTOR HUMAN::pos()
+{
+    return Data.pos;
 }

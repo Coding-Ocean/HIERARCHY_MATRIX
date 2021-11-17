@@ -7,6 +7,22 @@ class HUMAN :
     public GAME_OBJECT,
     public OBJECT
 {
+public:
+    HUMAN(class GAME* game);
+    int setup();
+    void update();
+    void draw();
+    VECTOR pos();
+public:
+    struct DATA {
+        VECTOR pos;
+        float animSpeed;
+        COLOR c1, c2, c3, c4, c5;
+        float ambient;
+    };
+private:
+    DATA Data;
+
     CUBE Cube;
     //上半身のパーツモデリング用マトリックス
     MATRIX BodyModel, NeckModel, HeadModel,
@@ -34,9 +50,5 @@ class HUMAN :
                 Leg1L,
                     Leg2L;
     //汎用アングル
-    float angle = 0;
-public:
-    HUMAN(class GAME* game);
-    void update();
-    void draw();
+    float animAngle = 0;
 };

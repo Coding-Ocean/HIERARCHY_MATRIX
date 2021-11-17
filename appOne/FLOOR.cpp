@@ -1,10 +1,15 @@
+#include "GAME.h"
 #include "FLOOR.h"
 
 FLOOR::FLOOR(GAME* game):
     GAME_OBJECT(game)
 {
-    Color[0].set(0, 0, 0);
-    Color[1].set(64, 128, 64);
+}
+
+int FLOOR::setup()
+{
+    Data = game()->allData.floorData;
+    return 0;
 }
 
 void FLOOR::draw()
@@ -15,7 +20,13 @@ void FLOOR::draw()
             World.mulScaling(3, 1, 3);
             World.mulTranslate((float)x, 0, (float)z);
             int no = (z + x) % 2 == 0 ? 0 : 1;
-            Plane.draw(World, Color[no]);
+            Plane.draw(World, Data.color[no]);
         }
     }
+}
+
+//カメラターゲット用位置
+VECTOR FLOOR::pos()
+{
+    return Data.pos;
 }

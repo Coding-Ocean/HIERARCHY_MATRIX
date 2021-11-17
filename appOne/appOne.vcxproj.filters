@@ -146,5 +146,6 @@
       <Filter>OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="ALL_DATA.h" />
+    <ClInclude Include="OBJ_ID.h" />
   </ItemGroup>
 </Project>

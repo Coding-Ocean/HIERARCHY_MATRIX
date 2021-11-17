@@ -10,8 +10,10 @@ public:
     CAMERA(class GAME* game);
     int setup();
     void update();
+    VECTOR angle();
     struct DATA {
-        VECTOR objAngle;
+        VECTOR pos;
+        VECTOR angle;
         float distance = 0;
         float rotSpeed = 0;
         float zoomSpeed = 0;

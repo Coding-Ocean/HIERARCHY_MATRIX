@@ -38,7 +38,7 @@ void CANNON::update()
         if (dir.x != 0 || dir.z != 0) {
             dir.normalize();
             MATRIX rot;
-            rot.rotateY(game()->object(GAME::OBJ_ID::CAMERA)->angle().y);
+            rot.rotateY(game()->object(OBJ_ID::CAMERA)->angle().y);
             dir = rot * dir;
             //ˆÚ“®
             Data.pos += dir * Data.advSpeed;
@@ -49,7 +49,7 @@ void CANNON::update()
 
     if (game()->state()==GAME::STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
-        VECTOR dir = game()->object(GAME::OBJ_ID::SATELLITE1)->pos() - Data.pos;
+        VECTOR dir = game()->object(OBJ_ID::SATELLITE1)->pos() - Data.pos;
         finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
     }
     
@@ -57,10 +57,7 @@ void CANNON::update()
         VECTOR dir(0, 0, 1);
         finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
     }
-}
 
-void CANNON::draw() 
-{
     Master.identity();
     Master.mulTranslate(Data.pos.x, Data.pos.y, Data.pos.z);
     Master.mulRotateY(Data.angle.y);
@@ -73,7 +70,10 @@ void CANNON::draw()
     Body.identity();
     Body.mulTranslate(0, 0, 0);
     Body.mulRotateX(Data.angle.x);
+}
 
+void CANNON::draw() 
+{
     WheelL = Master * WheelL;
     Cylinder->draw(WheelL, Data.wheelColor, Data.ambient);
     WheelR = Master * WheelR;
@@ -90,6 +90,11 @@ int CANNON::finished()
 VECTOR CANNON::pos()
 {
     return Data.pos;
+}
+
+VECTOR CANNON::angle()
+{
+    return Data.angle;
 }
 
 

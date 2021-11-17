@@ -11,24 +11,23 @@ CAMERA::CAMERA(class GAME* game)
 int CAMERA::setup()
 {
     Data = game()->allData.cameraData;
-    OBJECT::Angle = Data.objAngle;
 
-    Target[0] = game()->object(GAME::OBJ_ID::FLOOR);
-    Target[1] = game()->object(GAME::OBJ_ID::BULLET);
-    Target[2] = game()->object(GAME::OBJ_ID::SATELLITE1);
-    Target[3] = game()->object(GAME::OBJ_ID::SATELLITE2);
-    Target[4] = game()->object(GAME::OBJ_ID::ENEMY);
+    Target[0] = game()->object(OBJ_ID::FLOOR);
+    Target[1] = game()->object(OBJ_ID::BULLET);
+    Target[2] = game()->object(OBJ_ID::SATELLITE1);
+    Target[3] = game()->object(OBJ_ID::SATELLITE2);
+    Target[4] = game()->object(OBJ_ID::ENEMY);
 
     return 0;
 }
 
 void CAMERA::update(){
     //経度（東西）
-    if (isPress(KEY_J)) { Angle.y -= Data.rotSpeed; }
-    if (isPress(KEY_L)) { Angle.y += Data.rotSpeed; }
+    if (isPress(KEY_J)) { Data.angle.y -= Data.rotSpeed; }
+    if (isPress(KEY_L)) { Data.angle.y += Data.rotSpeed; }
     //緯度（南北）
-    if (isPress(KEY_I)) { Angle.x += Data.rotSpeed; }
-    if (isPress(KEY_K)) { Angle.x -= Data.rotSpeed; }
+    if (isPress(KEY_I)) { Data.angle.x += Data.rotSpeed; }
+    if (isPress(KEY_K)) { Data.angle.x -= Data.rotSpeed; }
     //ズーム
     if (isPress(KEY_U)) { Data.distance -= Data.zoomSpeed; }
     if (isPress(KEY_O)) { Data.distance += Data.zoomSpeed; }
@@ -45,14 +44,18 @@ void CAMERA::update(){
     }
     TargetPos = Target[Data.targetIdx]->pos();
     //カメラ位置（３D極座標）
-    Pos.x = sin(Angle.y) * cos(Angle.x) * Data.distance + TargetPos.x;
-    Pos.y =                sin(Angle.x) * Data.distance + TargetPos.y;
-    Pos.z = cos(Angle.y) * cos(Angle.x) * Data.distance + TargetPos.z;
-    UpVec.y = cos(Angle.x);
-    MODEL::view.camera(Pos, TargetPos, UpVec);
+    Data.pos.x = sin(Data.angle.y) * cos(Data.angle.x) * Data.distance + TargetPos.x;
+    Data.pos.y =                     sin(Data.angle.x) * Data.distance + TargetPos.y;
+    Data.pos.z = cos(Data.angle.y) * cos(Data.angle.x) * Data.distance + TargetPos.z;
+    UpVec.y = cos(Data.angle.x);
+    MODEL::view.camera(Data.pos, TargetPos, UpVec);
 #ifdef _DEBUG
-    print((let)"Angle.y=" + Angle.y);
-    print((let)"Angle.x=" + Angle.x);
+    print((let)"Data.angle.y=" + Data.angle.y);
+    print((let)"Data.angle.x=" + Data.angle.x);
     print((let)"Data.distance=" + Data.distance);
 #endif
+}
+
+VECTOR CAMERA::angle() {
+    return Data.angle;
 }

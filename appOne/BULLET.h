@@ -1,6 +1,7 @@
 #pragma once
 #include "GAME_OBJECT.h"
 #include "OBJECT.h"
+#include "OBJ_ID.h"
 #include "CONE.h"
 class BULLET :
     public GAME_OBJECT,
@@ -12,13 +13,15 @@ public:
     int setup();
     void update();
     void draw();
+    VECTOR pos();
     int finished();
     struct DATA {
         VECTOR pos;
         VECTOR angle;
         COLOR color;
+        float ambient;
         int numTargets;
-        GAME::OBJ_ID objId[8];
+        OBJ_ID objId[8];
     };
 private:
     DATA Data;

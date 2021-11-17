@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "ALL_DATA.h"
+#include "OBJ_ID.h"
 class GAME
 {
 public:
@@ -13,11 +14,6 @@ public:
     ALL_DATA allData;
 
     //Objects
-    enum class OBJ_ID {
-        CAMERA, PROJECTOR, LIGHT, FLOOR, CANNON, BULLET,
-        SATELLITE1, SATELLITE2, ENEMY, SNOW_MAN, HUMAN, 
-        NUM_OBJECTS
-    };
     class OBJECT* object(OBJ_ID id);
     int addObject(OBJ_ID id, class OBJECT*);
 

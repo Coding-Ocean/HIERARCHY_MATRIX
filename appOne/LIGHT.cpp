@@ -10,7 +10,6 @@ LIGHT::LIGHT(class GAME* game)
 int LIGHT::setup()
 {
     Data = game()->allData.lightData;
-    Pos = Data.objPos;
-    MODEL::lightPos = normalize(Pos);
+    MODEL::lightPos = normalize(Data.pos);
     return 0;
 }

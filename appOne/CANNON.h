@@ -16,6 +16,7 @@ public:
     void draw();
     int finished();
     VECTOR pos();
+    VECTOR angle();
     struct DATA {
         VECTOR pos;
         VECTOR angle;

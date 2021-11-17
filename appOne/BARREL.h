@@ -8,8 +8,8 @@ public:
 
         //各バッファを確保-------------------------------------------
         int numCorners = 36;
-        NumVertices = numCorners * 7 + 1;
-        NumTriangles = numCorners * 7;
+        NumVertices = numCorners * 8 + 2;
+        NumTriangles = numCorners * 8;
         allocateMemory();
 
         //座標-------------------------------------------------------
@@ -41,10 +41,15 @@ public:
             OPositions[j++].set(s[i] * r, c[i] * r, z);
             OPositions[j++].set(s[i] * r2, c[i] * r2, z);
         }
+        //筒の奥の前面
+        for (int i = 0; i < numCorners; i++) {
+            OPositions[j++].set(-s[i] * r, c[i] * r, -0.5f);
+        }
         //背面
         for (int i = 0; i < numCorners; i++) {
             OPositions[j++].set(s[i] * r, c[i] * r, -0.5f);
         }
+        OPositions[j++].set(0, 0, -0.5f);
         OPositions[j++].set(0, 0, -0.5f);
 
         //法線ベクトル-----------------------------------------------
@@ -64,18 +69,24 @@ public:
             ONormals[j++].set(0, 0, 1);
             ONormals[j++].set(0, 0, 1);
         }
+        //筒の奥手前面
+        for (int i = 0; i < numCorners; i++) {
+            ONormals[j++].set(0, 0, 1);
+        }
         //背面
         for (int i = 0; i < numCorners; i++) {
             ONormals[j++].set(0, 0, -1);
         }
+        ONormals[j++].set(0, 0, 1);
         ONormals[j++].set(0, 0, -1);
 
         //インデックス-----------------------------------------------
         int max = numCorners * 2;
         j = 0;
-        //外側、内側、前面
+        //外側、内側、前面ドーナツ
+        int m;
         for (int l = 0; l < 3; l++) {
-            int m = max * l;
+            m = max * l;
             for (int i = 0; i < numCorners; i++) {
                 int k = i * 2;
                 Indices[j++] = m + k + 0;
@@ -87,11 +98,14 @@ public:
                 Indices[j++] = Indices[j - 2] + 1;
             }
         }
-        int m = max * 3;
-        for (int i = 0; i < numCorners; i++) {
-            Indices[j++] = NumVertices - 1;
-            Indices[j++] = m + i;
-            Indices[j++] = m + (i + 1) % numCorners;
+        //後ろの円（表裏）
+        for (int l = 0; l < 2; l++) {
+            m = max * 3 + numCorners * l;
+            for (int i = 0; i < numCorners; i++) {
+                Indices[j++] = NumVertices - (2-l);
+                Indices[j++] = m + i;
+                Indices[j++] = m + (i + 1) % numCorners;
+            }
         }
 
         //解放

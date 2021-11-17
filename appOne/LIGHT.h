@@ -9,7 +9,7 @@ public:
     LIGHT(class GAME* game);
     int setup();
     struct DATA {
-        VECTOR objPos;
+        VECTOR pos;
     };
 private:
     DATA Data;
