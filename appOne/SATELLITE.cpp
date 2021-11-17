@@ -63,10 +63,9 @@ void SATELLITE::update()
 
 void SATELLITE::draw()
 {
-    
     Cylinder->draw(Master, Data.bodyColor, Data.ambient);
     Ref = Master * Ref;
-    Square.draw(Ref, Data.squareColor, Data.ambient);
+    Square.draw(Ref, Data.squareColor, Data.refAmbient);
     WingL = Master * WingL;
     Square.draw(WingL * WingModel, Data.squareColor, Data.ambient);
     WingR = Master * WingR;

@@ -112,5 +112,5 @@ void HUMAN::draw() {
 
 VECTOR HUMAN::pos()
 {
-    return Data.pos;
+    return Data.pos + VECTOR(0,2,0);
 }

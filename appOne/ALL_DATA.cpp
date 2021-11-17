@@ -15,7 +15,7 @@ void setAllData(ALL_DATA& allData)
     allData.lightData.pos.set(0, 1, 0);
 
     allData.floorData.pos.set(0,1,0);
-    allData.floorData.color[0].set(32, 32, 32);
+    allData.floorData.color[0].set(0, 0, 0);
     allData.floorData.color[1].set(80, 128, 80);
 
     allData.cannonData.pos.set(-3, 0.8f, 0);
@@ -42,6 +42,7 @@ void setAllData(ALL_DATA& allData)
     allData.satelliteData[0].bodyColor.set(255, 255, 0);
     allData.satelliteData[0].squareColor.set(255, 200, 60);
     allData.satelliteData[0].ambient = 0.4f;
+    allData.satelliteData[0].refAmbient = 0.6f;
     allData.satelliteData[0].animSpeed = 0.017f;
 
     allData.satelliteData[1].pos.set(-4, 6, 0);
@@ -49,10 +50,11 @@ void setAllData(ALL_DATA& allData)
     allData.satelliteData[1].advSpeed = -0.01f;
     allData.satelliteData[1].rotSpeed = 0.05f;
     allData.satelliteData[1].preObjId = OBJ_ID::SATELLITE1;
-    allData.satelliteData[1].preObjId = OBJ_ID::ENEMY;
+    allData.satelliteData[1].preObjId = allData.bulletData.objId[2];
     allData.satelliteData[1].bodyColor.set(255, 255, 0);
     allData.satelliteData[1].squareColor.set(255, 200, 60);
     allData.satelliteData[1].ambient = 0.4f;
+    allData.satelliteData[1].refAmbient = 0.6f;
     allData.satelliteData[1].animSpeed = 0.017f;
 
     allData.enemyData.pos.set(6, 1.4f, 6);
@@ -67,7 +69,6 @@ void setAllData(ALL_DATA& allData)
     allData.humanData.c4 = COLOR(255, 100, 100);
     allData.humanData.c5 = COLOR(220, 0, 0);
     allData.humanData.ambient = 0.7f;
-
 
     allData.snowManData.pos.set(-9, 1.2f, 9);
     allData.snowManData.ambient = 0.5f;

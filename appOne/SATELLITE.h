@@ -25,6 +25,7 @@ public:
         COLOR squareColor;
         COLOR bodyColor;
         float ambient;
+        float refAmbient;
         float moveRange;
         float animSpeed;
     };
