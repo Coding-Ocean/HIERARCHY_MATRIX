@@ -40,12 +40,17 @@ void SATELLITE::update()
         b.normalize();
         VECTOR dir = a + b;
         //‰ñ“]
-        finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
+        if (rotate(&Data.angle, dir, Data.rotSpeed)) {
+            EndOfRotationFlags = EndOfRotationFlags | Data.finishFlag;
+        }
     }
 
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
         //‰ñ“]
-        finishRotating = rotate(&Data.angle, VECTOR(0, 0, 1), Data.rotSpeed);
+        VECTOR dir(0, 0, 1);
+        if (rotate(&Data.angle, dir, Data.rotSpeed)) {
+            EndOfRotationFlags = EndOfRotationFlags | Data.finishFlag;
+        }
     }
 
     Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);
@@ -75,9 +80,4 @@ void SATELLITE::draw()
 VECTOR SATELLITE::pos()
 {
     return Data.pos;
-}
-
-int SATELLITE::finished()
-{
-    return finishRotating;
 }

@@ -19,6 +19,8 @@ int CANNON::setup()
 {
     //Data
     Data = game()->allData.cannonData;
+    Target = game()->object(Data.objId);
+
     //Model
     Cylinder = new CYLINDER(36, 0, -0.2f);
     Barrel = new BARREL;
@@ -49,13 +51,17 @@ void CANNON::update()
 
     if (game()->state()==GAME::STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
-        VECTOR dir = game()->object(OBJ_ID::SATELLITE1)->pos() - Data.pos;
-        finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
+        VECTOR dir = Target->pos() - Data.pos;
+        if (rotate(&Data.angle, dir, Data.rotSpeed)) {
+            EndOfRotationFlags |= Data.finishFlag;
+        }
     }
     
     if (game()->state() == GAME::STATE::ROTATE_BACK) {
         VECTOR dir(0, 0, 1);
-        finishRotating = rotate(&Data.angle, dir, Data.rotSpeed);
+        if (rotate(&Data.angle, dir, Data.rotSpeed)) {
+            EndOfRotationFlags |= Data.finishFlag;
+        }
     }
 
     Master.identity();
@@ -80,11 +86,6 @@ void CANNON::draw()
     Cylinder->draw(WheelR, Data.wheelColor, Data.ambient);
     Body = Master * Body;
     Barrel->draw(Body,Data.bodyColor, Data.ambient);
-}
-
-int CANNON::finished()
-{
-    return finishRotating;
 }
 
 VECTOR CANNON::pos()

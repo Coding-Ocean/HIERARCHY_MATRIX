@@ -18,6 +18,7 @@ public:
     struct DATA {
         VECTOR pos;
         VECTOR angle;
+        float advSpeed;
         COLOR color;
         float ambient;
         int numTargets;

@@ -42,9 +42,9 @@ void ENEMY::update()
 void ENEMY::draw()
 {
 
-    Cylinder.draw(Master * StickModel, COLOR(255,255,255), 0.4);
+    Cylinder.draw(Master * StickModel, COLOR(255,255,255), 0.4f);
     
-    Sphere.draw(Master * HeadModel, Data.headColor);
+    Sphere.draw(Master * HeadModel, Data.headColor, 0.4f);
 
     NucleusA = Master * NucleusA;
     Sphere.draw(NucleusA);

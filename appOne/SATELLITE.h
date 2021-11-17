@@ -14,7 +14,6 @@ public:
     void update();
     void draw();
     VECTOR pos();
-    int finished();
     struct DATA {
         VECTOR pos;
         VECTOR angle;
@@ -28,6 +27,7 @@ public:
         float refAmbient;
         float moveRange;
         float animSpeed;
+        int finishFlag;
     };
 private:
     static int Num;
@@ -42,7 +42,5 @@ private:
 
     float AnimAngle = 0;
     float AngleForPos = 0;
-    
-    int finishRotating = 0;
 };
 

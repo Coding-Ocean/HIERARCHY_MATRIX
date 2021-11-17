@@ -1,6 +1,17 @@
 #include"mathUtil.h"
 #include "OBJECT.h"
 
+int OBJECT::EndOfRotationFlags = 0;
+
+void OBJECT::resetEndOfRotationFlags() {
+    EndOfRotationFlags = 0;
+}
+
+int OBJECT::endOfRotation()
+{
+    return EndOfRotationFlags == 0b0111;
+}
+
 OBJECT::~OBJECT()
 {
 }

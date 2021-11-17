@@ -25,12 +25,15 @@ void setAllData(ALL_DATA& allData)
     allData.cannonData.wheelColor.set(150, 0, 150);
     allData.cannonData.bodyColor.set(255, 150, 150);
     allData.cannonData.ambient = 0.3f;
+    allData.cannonData.finishFlag = 0b0001;
+    allData.cannonData.objId = OBJ_ID::SATELLITE2;
 
+    allData.bulletData.advSpeed = 0.2f;
     allData.bulletData.color.set(255, 60, 60);
     allData.bulletData.ambient = 0.5f;
     allData.bulletData.numTargets = 3;//ç≈ëÂÇW
-    allData.bulletData.objId[0] = OBJ_ID::SATELLITE1;
-    allData.bulletData.objId[1] = OBJ_ID::SATELLITE2;
+    allData.bulletData.objId[0] = allData.cannonData.objId;
+    allData.bulletData.objId[1] = OBJ_ID::SATELLITE1;
     allData.bulletData.objId[2] = OBJ_ID::ENEMY;
 
     allData.satelliteData[0].pos.set(4, 5, 0);
@@ -38,24 +41,26 @@ void setAllData(ALL_DATA& allData)
     allData.satelliteData[0].advSpeed = 0.01f;
     allData.satelliteData[0].rotSpeed = 0.05f;
     allData.satelliteData[0].preObjId = OBJ_ID::CANNON;
-    allData.satelliteData[0].preObjId = OBJ_ID::SATELLITE2;
+    allData.satelliteData[0].postObjId = allData.bulletData.objId[1];
     allData.satelliteData[0].bodyColor.set(255, 255, 0);
     allData.satelliteData[0].squareColor.set(255, 200, 60);
     allData.satelliteData[0].ambient = 0.4f;
     allData.satelliteData[0].refAmbient = 0.6f;
     allData.satelliteData[0].animSpeed = 0.017f;
+    allData.satelliteData[0].finishFlag = 0b0010;
 
     allData.satelliteData[1].pos.set(-4, 6, 0);
     allData.satelliteData[1].moveRange = 5;
     allData.satelliteData[1].advSpeed = -0.01f;
     allData.satelliteData[1].rotSpeed = 0.05f;
-    allData.satelliteData[1].preObjId = OBJ_ID::SATELLITE1;
-    allData.satelliteData[1].preObjId = allData.bulletData.objId[2];
+    allData.satelliteData[1].preObjId = allData.bulletData.objId[1];
+    allData.satelliteData[1].postObjId = allData.bulletData.objId[2];
     allData.satelliteData[1].bodyColor.set(255, 255, 0);
     allData.satelliteData[1].squareColor.set(255, 200, 60);
     allData.satelliteData[1].ambient = 0.4f;
     allData.satelliteData[1].refAmbient = 0.6f;
     allData.satelliteData[1].animSpeed = 0.017f;
+    allData.satelliteData[1].finishFlag = 0b0100;
 
     allData.enemyData.pos.set(6, 1.4f, 6);
     allData.enemyData.animSpeed = 0.4f;
@@ -72,4 +77,33 @@ void setAllData(ALL_DATA& allData)
 
     allData.snowManData.pos.set(-9, 1.2f, 9);
     allData.snowManData.ambient = 0.5f;
+
+#define TEST_
+#ifdef TEST_A
+    allData.cannonData.pos.set(-3, 0.8f, 6);
+    allData.satelliteData[0].pos.set(-3, 0.8f, 0);
+    allData.satelliteData[1].pos.set(3, 0.8f, 0);
+    allData.enemyData.pos.set(3, 0.8f, 6);
+    allData.satelliteData[0].advSpeed = 0;
+    allData.satelliteData[1].advSpeed = 0;
+    allData.bulletData.advSpeed = 0.1f;
+#endif
+#ifdef TEST_B
+    allData.cannonData.pos.set(-3, 0.8f, 0);
+    allData.satelliteData[0].pos.set(-3, 6.8f, 0);
+    allData.satelliteData[1].pos.set(3, 6.8f, 0);
+    allData.enemyData.pos.set(3, 1.4f, 0);
+    allData.satelliteData[0].advSpeed = 0;
+    allData.satelliteData[1].advSpeed = 0;
+    allData.bulletData.advSpeed = 0.1f;
+#endif
+#ifdef TEST_C
+    allData.cannonData.objId = OBJ_ID::SATELLITE2;
+    allData.bulletData.objId[0] = allData.cannonData.objId;
+    allData.bulletData.objId[1] = OBJ_ID::SATELLITE1;
+    allData.bulletData.objId[2] = OBJ_ID::HUMAN;
+    allData.satelliteData[0].postObjId = allData.bulletData.objId[1];
+    allData.satelliteData[1].preObjId = allData.bulletData.objId[1];
+    allData.satelliteData[1].postObjId = allData.bulletData.objId[2];
+#endif
 }

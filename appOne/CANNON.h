@@ -3,6 +3,7 @@
 #include "MATRIX.h"
 #include "COLOR.h"
 #include "GAME_OBJECT.h"
+#include "OBJ_ID.h"
 #include "OBJECT.h"
 class CANNON :
     public GAME_OBJECT,
@@ -14,7 +15,6 @@ public:
     int setup();
     void update();
     void draw();
-    int finished();
     VECTOR pos();
     VECTOR angle();
     struct DATA {
@@ -26,10 +26,12 @@ public:
         float advSpeed;
         float advRotSpeed;
         float rotSpeed;
+        int finishFlag;
+        OBJ_ID objId;
     };
 private:
     DATA Data;
-    int finishRotating = 0;
+    OBJECT* Target;
     class CYLINDER* Cylinder;
     class BARREL* Barrel;
     MATRIX Master, WheelL, WheelR, Body;

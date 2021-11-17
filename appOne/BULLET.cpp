@@ -42,7 +42,7 @@ void BULLET::update()
         if (Step < Data.numTargets) {
             VECTOR dir = Targets[Step]->pos() - Data.pos;
             float len = dir.mag();
-            Data.pos += dir.normalize() * 0.2f;
+            Data.pos += dir.normalize() * Data.advSpeed;
             rotate(&Data.angle, dir, 1);
             if (len < 0.3f) {
                 Step++;

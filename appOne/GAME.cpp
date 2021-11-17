@@ -52,33 +52,28 @@ void GAME::stateManager()
     if (State == GAME::STATE::MOVE) {
         if (isTrigger(KEY_Z)) {
             State = GAME::STATE::ROTATE;
+            OBJECT::resetEndOfRotationFlags();
         }
     }
 
     else if (State == GAME::STATE::ROTATE) {
-        if (object(OBJ_ID::CANNON)->finished() &&
-            object(OBJ_ID::SATELLITE1)->finished() &&
-            object(OBJ_ID::SATELLITE2)->finished()) {
-            //if (isTrigger(KEY_Z)) 
-            {
-                State = GAME::STATE::FLY;
-                Count = 0;
-            }
+        if (OBJECT::endOfRotation()) {
+            State = GAME::STATE::FLY;
+            Count = 0;
         }
     }
 
     else if (State == GAME::STATE::FLY) {
         if (object(OBJ_ID::BULLET)->finished()) {
             if (++Count > 90) {
+                OBJECT::resetEndOfRotationFlags();
                 State = GAME::STATE::ROTATE_BACK;
             }
         }
     }
 
     else if (State == GAME::STATE::ROTATE_BACK) {
-        if (object(OBJ_ID::CANNON)->finished() &&
-            object(OBJ_ID::SATELLITE1)->finished() &&
-            object(OBJ_ID::SATELLITE2)->finished()) {
+        if (OBJECT::endOfRotation()){
             State = GAME::STATE::MOVE;
         }
     }
