@@ -1,9 +1,7 @@
 #pragma once
 #include "VECTOR.h"
-#include "GAME_OBJECT.h"
 #include "OBJECT.h"
 class CAMERA :
-    public GAME_OBJECT, 
     public OBJECT
 {
 public:

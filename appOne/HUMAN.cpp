@@ -1,12 +1,12 @@
 #include "GAME.h"
 #include "HUMAN.h"
 HUMAN::HUMAN(class GAME* game)
-    :GAME_OBJECT(game)
+    :OBJECT(game)
 {
 }
 int HUMAN::setup()
 {
-    Data = game()->allData.humanData;
+    Data = game()->allData()->humanData;
 
     //上半身パーツのモデリング
     BodyModel.scaling(0.4f, 0.4f, 0.25f);
@@ -35,13 +35,16 @@ int HUMAN::setup()
     return 0;
 }
 void HUMAN::update() {
-    if (game()->state() == GAME::STATE::MOVE) {
-        animAngle += Data.animSpeed;
+    if (game()->objState() == OBJ_STATE::ROTATE_BACK) {
+        AnimAngle = 0;
+    }
+    else {
+        AnimAngle += Data.animSpeed;
     }
 
     //回転係数
-    float s = sin(animAngle);
-    float c0_2 = 1 - cos(animAngle * 2);
+    float s = sin(AnimAngle);
+    float c0_2 = 1 - cos(AnimAngle * 2);
     float s_ntoz = s < 0 ? 0 : s;
     float ns = -s;
     float ns_ntoz = ns < 0 ? 0 : ns;

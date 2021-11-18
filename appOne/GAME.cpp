@@ -21,7 +21,7 @@ GAME::~GAME()
 
 int GAME::setup()
 {
-    setAllData(allData);
+    setAllData(AllData);
 
     window(1920, 1080, full);
     hideCursor();
@@ -41,7 +41,7 @@ int GAME::setup()
 
     for (OBJECT* object : Objects)object->setup();
 
-    State = GAME::STATE::MOVE;
+    ObjState = OBJ_STATE::MOVE;
 
     return 0;
 }
@@ -58,38 +58,41 @@ void GAME::run()
         clear(0, 0, 40);
         for (OBJECT* object : Objects)object->update();
         for (OBJECT* object : Objects)object->draw();
-        stateManager();
+        objStateManager();
     }
 }
 
-void GAME::stateManager()
+const ALL_DATA* GAME::allData()
 {
-    if (State == GAME::STATE::MOVE) {
+    return &AllData;
+}
+
+void GAME::objStateManager()
+{
+    if (ObjState == OBJ_STATE::MOVE) {
         if (isTrigger(KEY_Z)) {
-            State = GAME::STATE::ROTATE;
-            OBJECT::resetEndOfRotationFlags();
+            OBJECT::resetEndFlags(AllData.rotationCompletedFlags);
+            ObjState = OBJ_STATE::ROTATE;
         }
     }
 
-    else if (State == GAME::STATE::ROTATE) {
-        if (OBJECT::endOfRotation()) {
-            State = GAME::STATE::FLY;
-            Count = 0;
+    else if (ObjState == OBJ_STATE::ROTATE) {
+        if (OBJECT::endOfState()) {
+            OBJECT::resetEndFlags(AllData.flyingCompletedFlags);
+            ObjState = OBJ_STATE::FLY;
         }
     }
 
-    else if (State == GAME::STATE::FLY) {
-        if (object(OBJ_ID::BULLET)->finished()) {
-            if (++Count > 90) {
-                OBJECT::resetEndOfRotationFlags();
-                State = GAME::STATE::ROTATE_BACK;
-            }
+    else if (ObjState == OBJ_STATE::FLY) {
+        if (OBJECT::endOfState()) {
+            OBJECT::resetEndFlags(AllData.rotationCompletedFlags);
+            ObjState = OBJ_STATE::ROTATE_BACK;
         }
     }
 
-    else if (State == GAME::STATE::ROTATE_BACK) {
-        if (OBJECT::endOfRotation()){
-            State = GAME::STATE::MOVE;
+    else if (ObjState == OBJ_STATE::ROTATE_BACK) {
+        if (OBJECT::endOfState()){
+            ObjState = OBJ_STATE::MOVE;
         }
     }
 }
@@ -99,8 +102,8 @@ OBJECT* GAME::object(OBJ_ID id)
     return Objects[static_cast<int>(id)];
 }
 
-GAME::STATE GAME::state()
+OBJ_STATE GAME::objState()
 {
-    return State;
+    return ObjState;
 }
 

@@ -1,15 +1,11 @@
 #include"mathUtil.h"
 #include "OBJECT.h"
 
-int OBJECT::EndOfRotationFlags = 0;
 
-void OBJECT::resetEndOfRotationFlags() {
-    EndOfRotationFlags = 0;
-}
 
-int OBJECT::endOfRotation()
+OBJECT::OBJECT(GAME* game)
+    :GAME_POINTER(game)
 {
-    return EndOfRotationFlags == 0b0111;
 }
 
 OBJECT::~OBJECT()
@@ -27,11 +23,6 @@ void OBJECT::update()
 
 void OBJECT::draw()
 {
-}
-
-int OBJECT::finished()
-{
-    return 0;
 }
 
 VECTOR OBJECT::pos()
@@ -58,8 +49,29 @@ int OBJECT::rotate(VECTOR* angle, const VECTOR& dir, float speed, int endOfRotat
     angle->y += angleBetweenY * speed;
     //‰ñ“]I—¹
     if (-0.02f < angleBetweenY && angleBetweenY <0.02f) {
-        EndOfRotationFlags |= endOfRotationFlag;
+        EndOfStateFlags |= endOfRotationFlag;
         return 1;
     }
     return 0;
+}
+
+//
+int OBJECT::EndOfStateFlags = 0;
+int OBJECT::CompletedFlags = 0;
+
+void OBJECT::resetEndFlags(int completedFlags)
+{
+    EndOfStateFlags = 0;
+    CompletedFlags = completedFlags;
+}
+
+int OBJECT::endOfState()
+{
+    return EndOfStateFlags == CompletedFlags;
+}
+
+//OBJ_STATE::FLY‚ªI—¹‚µ‚½‚Æ‚«‚Ég‚¤
+void OBJECT::completeState()
+{
+    EndOfStateFlags = CompletedFlags;
 }

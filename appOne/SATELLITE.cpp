@@ -3,7 +3,7 @@
 int SATELLITE::Num = 0;
 
 SATELLITE::SATELLITE(class GAME* game) 
-    :GAME_OBJECT(game)
+    :OBJECT(game)
 {
     Id = Num;
     Num++;
@@ -15,7 +15,7 @@ SATELLITE::~SATELLITE() {
 
 int SATELLITE::setup()
 {
-    Data = game()->allData.satelliteData[Id];
+    Data = game()->allData()->satelliteData[Id];
 
     Cylinder = new CYLINDER(36, 0, -1.5f);
 
@@ -26,12 +26,12 @@ int SATELLITE::setup()
 
 void SATELLITE::update()
 {
-    if (game()->state() == GAME::STATE::MOVE) {
+    if (game()->objState() == OBJ_STATE::MOVE) {
         Data.pos.z = sin(AngleForPos) * Data.moveRange;
         AngleForPos += Data.advSpeed;
     }
 
-    if (game()->state() == GAME::STATE::ROTATE) {
+    if (game()->objState() == OBJ_STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
         //”ò‚ñ‚Å—ˆ‚½•ûŒüa‚Æ”ò‚ñ‚Ås‚­•ûŒüb‚ð‚Q•ª‚µ‚½•ûŒüdir‚ð‹‚ß‚é
         VECTOR a = game()->object(Data.preObjId)->pos() - Data.pos;
@@ -43,10 +43,10 @@ void SATELLITE::update()
         rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
     }
 
-    if (game()->state() == GAME::STATE::ROTATE_BACK) {
+    if (game()->objState() == OBJ_STATE::ROTATE_BACK) {
         //‰ñ“]
         VECTOR dir(0, 0, 1);
-        rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
+        rotate(&Data.angle, dir, Data.rotBackSpeed, Data.endOfRotationFlag);
     }
 
     Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);

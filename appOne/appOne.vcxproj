@@ -160,7 +160,7 @@
     <ClCompile Include="ENEMY.cpp" />
     <ClCompile Include="FLOOR.cpp" />
     <ClCompile Include="GAME.cpp" />
-    <ClCompile Include="GAME_OBJECT.cpp" />
+    <ClCompile Include="GAME_POINTER.cpp" />
     <ClCompile Include="gmain.cpp" />
     <ClCompile Include="HUMAN.cpp" />
     <ClCompile Include="LIGHT.cpp" />
@@ -188,13 +188,14 @@
     <ClInclude Include="ENEMY.h" />
     <ClInclude Include="FLOOR.h" />
     <ClInclude Include="GAME.h" />
-    <ClInclude Include="GAME_OBJECT.h" />
+    <ClInclude Include="GAME_POINTER.h" />
     <ClInclude Include="HUMAN.h" />
     <ClInclude Include="JAG.h" />
     <ClInclude Include="LIGHT.h" />
     <ClInclude Include="MODEL.h" />
     <ClInclude Include="OBJECT.h" />
     <ClInclude Include="OBJ_ID.h" />
+    <ClInclude Include="OBJ_STATE.h" />
     <ClInclude Include="PLANE.h" />
     <ClInclude Include="POLYGON.h" />
     <ClInclude Include="PRISM.h" />

@@ -2,7 +2,7 @@
 #include "BULLET.h"
 
 BULLET::BULLET(GAME* game)
-    :GAME_OBJECT(game)
+    :OBJECT(game)
 {
 }
 
@@ -14,7 +14,7 @@ BULLET::~BULLET()
 
 int BULLET::setup()
 {
-    Data = game()->allData.bulletData;
+    Data = game()->allData()->bulletData;
     
     Targets = new OBJECT * [Data.numTargets];
     for (int i = 0; i < Data.numTargets; i++) {
@@ -28,25 +28,29 @@ int BULLET::setup()
 
 void BULLET::update()
 {
-    if (game()->state() == GAME::STATE::MOVE) {
+    if (game()->objState() == OBJ_STATE::MOVE) {
         Data.pos = game()->object(OBJ_ID::CANNON)->pos();
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
-        Step = 0;
     }
 
-    if (game()->state() == GAME::STATE::ROTATE) {
+    if (game()->objState() == OBJ_STATE::ROTATE) {
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
+        TargetNo = 0;
     }
 
-    if (game()->state() == GAME::STATE::FLY) {
-        if (Step < Data.numTargets) {
-            VECTOR dir = Targets[Step]->pos() - Data.pos;
-            float len = dir.mag();
+    if (game()->objState() == OBJ_STATE::FLY) {
+        if (TargetNo < Data.numTargets) {
+            VECTOR dir = Targets[TargetNo]->pos() - Data.pos;
+            float distance = dir.mag();
             Data.pos += dir.normalize() * Data.advSpeed;
             rotate(&Data.angle, dir, Data.rotSpeed);
-            if (len < 0.3f) {
-                Step++;
+            //当たったので次のターゲットへ
+            if (distance < Data.collisionDistance) {
+                TargetNo++;
             }
+        }
+        else {
+            completeState();
         }
     }
 
@@ -64,9 +68,4 @@ void BULLET::draw()
 VECTOR BULLET::pos()
 {
     return Data.pos;
-}
-
-int BULLET::finished()
-{
-    return Step == Data.numTargets;
 }

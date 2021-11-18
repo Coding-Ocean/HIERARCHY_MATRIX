@@ -1,8 +1,6 @@
 #pragma once
-#include "GAME_OBJECT.h"
 #include "OBJECT.h"
 class PROJECTOR:
-    public GAME_OBJECT,
     public OBJECT
 {
 public:

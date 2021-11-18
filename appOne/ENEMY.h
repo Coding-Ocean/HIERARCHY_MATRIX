@@ -1,10 +1,8 @@
 #pragma once
-#include "GAME_OBJECT.h"
 #include "OBJECT.h"
 #include "SPHERE.h"
 #include "CYLINDER.h"
 class ENEMY :
-    public GAME_OBJECT,
     public OBJECT
 {
 public:
@@ -18,6 +16,8 @@ public:
         VECTOR pos;
         float animSpeed;
         COLOR headColor;
+        COLOR stickColor;
+        float ambient;
     };
 private:
     DATA Data;

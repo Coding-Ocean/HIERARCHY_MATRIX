@@ -1,10 +1,8 @@
 #pragma once
-#include "GAME_OBJECT.h"
 #include "OBJECT.h"
 #include "CUBE.h"
 #include "MATRIX.h"
 class HUMAN : 
-    public GAME_OBJECT,
     public OBJECT
 {
 public:
@@ -50,5 +48,5 @@ private:
                 Leg1L,
                     Leg2L;
     //”Ä—pƒAƒ“ƒOƒ‹
-    float animAngle = 0;
+    float AnimAngle = 0;
 };

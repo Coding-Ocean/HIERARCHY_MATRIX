@@ -1,10 +1,8 @@
 #pragma once
-#include"GAME_OBJECT.h"
 #include "OBJECT.h"
 #include "PLANE.h"
 #include"MATRIX.h"
 class FLOOR :
-    public GAME_OBJECT,
     public OBJECT
 {
 public:

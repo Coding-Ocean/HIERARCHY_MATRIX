@@ -58,7 +58,6 @@
       <Filter>OBJECT\BASE</Filter>
     </ClCompile>
     <ClCompile Include="GAME.cpp" />
-    <ClCompile Include="GAME_OBJECT.cpp" />
     <ClCompile Include="BULLET.cpp">
       <Filter>OBJECT</Filter>
     </ClCompile>
@@ -72,6 +71,7 @@
       <Filter>OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="ALL_DATA.cpp" />
+    <ClCompile Include="GAME_POINTER.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BARREL.h">
@@ -132,7 +132,6 @@
       <Filter>OBJECT\BASE</Filter>
     </ClInclude>
     <ClInclude Include="GAME.h" />
-    <ClInclude Include="GAME_OBJECT.h" />
     <ClInclude Include="BULLET.h">
       <Filter>OBJECT</Filter>
     </ClInclude>
@@ -146,6 +145,12 @@
       <Filter>OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="ALL_DATA.h" />
-    <ClInclude Include="OBJ_ID.h" />
+    <ClInclude Include="OBJ_ID.h">
+      <Filter>OBJECT\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJ_STATE.h">
+      <Filter>OBJECT\BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME_POINTER.h" />
   </ItemGroup>
 </Project>

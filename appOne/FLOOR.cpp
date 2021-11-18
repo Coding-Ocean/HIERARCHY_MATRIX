@@ -2,13 +2,13 @@
 #include "FLOOR.h"
 
 FLOOR::FLOOR(GAME* game):
-    GAME_OBJECT(game)
+    OBJECT(game)
 {
 }
 
 int FLOOR::setup()
 {
-    Data = game()->allData.floorData;
+    Data = game()->allData()->floorData;
     return 0;
 }
 

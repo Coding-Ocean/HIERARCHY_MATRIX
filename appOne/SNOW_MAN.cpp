@@ -2,7 +2,7 @@
 #include "SNOW_MAN.h"
 
 SNOW_MAN::SNOW_MAN(GAME* game):
-    GAME_OBJECT(game)
+    OBJECT(game)
 {
 }
 
@@ -13,7 +13,7 @@ SNOW_MAN::~SNOW_MAN()
 
 int SNOW_MAN::setup()
 {
-    Data = game()->allData.snowManData;
+    Data = game()->allData()->snowManData;
 
     TruncatedCone = new CYLINDER(36, 0, -1, 0.5f, 0.3f);
 
@@ -29,12 +29,6 @@ int SNOW_MAN::setup()
 
 void SNOW_MAN::update()
 {
-    if (game()->state() == GAME::STATE::MOVE) {
-    }
-
-    if (game()->state() == GAME::STATE::ROTATE) {
-    }
-
     Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);
     Master.mulRotateY(Data.angle.y);
     Body.translate(0, 0.5f-1.2f, 0);

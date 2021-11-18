@@ -1,10 +1,8 @@
 #pragma once
-#include "GAME_OBJECT.h"
 #include "OBJECT.h"
 #include "CYLINDER.h"
 #include "SQUARE.h"
 class SATELLITE :
-    public GAME_OBJECT,
     public OBJECT
 {
 public:
@@ -19,6 +17,7 @@ public:
         VECTOR angle;
         float advSpeed;
         float rotSpeed;
+        float rotBackSpeed;
         OBJ_ID preObjId;
         OBJ_ID postObjId;
         COLOR squareColor;

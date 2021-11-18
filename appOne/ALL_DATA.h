@@ -20,5 +20,7 @@ struct ALL_DATA {
     ENEMY::DATA enemyData;
     SNOW_MAN::DATA snowManData;
     HUMAN::DATA humanData;
+    int rotationCompletedFlags;
+    int flyingCompletedFlags;
 };
 void setAllData(ALL_DATA& allData);

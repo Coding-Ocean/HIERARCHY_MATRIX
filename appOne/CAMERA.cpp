@@ -4,13 +4,13 @@
 #include"MODEL.h"
 #include "CAMERA.h"
 CAMERA::CAMERA(class GAME* game)
-    : GAME_OBJECT(game)
+    : OBJECT(game)
 {
 }
 
 int CAMERA::setup()
 {
-    Data = game()->allData.cameraData;
+    Data = game()->allData()->cameraData;
 
     Target[0] = game()->object(OBJ_ID::FLOOR);
     Target[1] = game()->object(OBJ_ID::BULLET);

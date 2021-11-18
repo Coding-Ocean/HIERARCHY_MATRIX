@@ -5,7 +5,7 @@
 #include "CANNON.h"
 
 CANNON::CANNON(GAME* game) :
-    GAME_OBJECT(game)
+    OBJECT(game)
 {
 }
 
@@ -18,7 +18,7 @@ CANNON::~CANNON()
 int CANNON::setup()
 {
     //Data
-    Data = game()->allData.cannonData;
+    Data = game()->allData()->cannonData;
     Target = game()->object(Data.objId);
 
     //Model
@@ -30,7 +30,7 @@ int CANNON::setup()
 
 void CANNON::update()
 {
-    if (game()->state()==GAME::STATE::MOVE) {
+    if (game()->objState()==OBJ_STATE::MOVE) {
         //ˆÚ“®•ûŒü‚ðŒˆ‚ß‚é
         VECTOR dir(0, 0, 0);
         if (isPress(KEY_D)) { dir.x = 1; }
@@ -49,15 +49,15 @@ void CANNON::update()
         }
     }
 
-    if (game()->state()==GAME::STATE::ROTATE) {
+    if (game()->objState()==OBJ_STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
         VECTOR dir = Target->pos() - Data.pos;
         rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
     }
     
-    if (game()->state() == GAME::STATE::ROTATE_BACK) {
+    if (game()->objState() == OBJ_STATE::ROTATE_BACK) {
         VECTOR dir(0, 0, 1);
-        rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
+        rotate(&Data.angle, dir, Data.rotBackSpeed, Data.endOfRotationFlag);
     }
 
     Master.identity();

@@ -3,13 +3,13 @@
 #include "LIGHT.h"
 
 LIGHT::LIGHT(class GAME* game)
-    :GAME_OBJECT(game)
+    :OBJECT(game)
 {
 }
 
 int LIGHT::setup()
 {
-    Data = game()->allData.lightData;
+    Data = game()->allData()->lightData;
     MODEL::lightPos = normalize(Data.pos);
     return 0;
 }

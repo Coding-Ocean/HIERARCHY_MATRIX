@@ -22,6 +22,7 @@ void setAllData(ALL_DATA& allData)
     allData.cannonData.advSpeed = 0.05f;
     allData.cannonData.advRotSpeed = 0.25f;
     allData.cannonData.rotSpeed = 0.05f;
+    allData.cannonData.rotBackSpeed = 0.025f;
     allData.cannonData.wheelColor.set(150, 0, 150);
     allData.cannonData.bodyColor.set(255, 150, 150);
     allData.cannonData.ambient = 0.3f;
@@ -30,17 +31,21 @@ void setAllData(ALL_DATA& allData)
 
     allData.bulletData.advSpeed = 0.2f;
     allData.bulletData.rotSpeed = 0.25f;
+    allData.bulletData.collisionDistance = 0.3f;
     allData.bulletData.color.set(255, 60, 60);
     allData.bulletData.ambient = 0.5f;
-    allData.bulletData.numTargets = 3;//最大８
+    allData.bulletData.numTargets = 5;//最大８
     allData.bulletData.objId[0] = OBJ_ID::SATELLITE1;
     allData.bulletData.objId[1] = OBJ_ID::SATELLITE2;
-    allData.bulletData.objId[2] = OBJ_ID::SNOW_MAN;//最後のターゲットは変更できる
+    allData.bulletData.objId[2] = OBJ_ID::ENEMY;//最後のターゲットは変更できる
+    allData.bulletData.objId[3] = OBJ_ID::SNOW_MAN;//最後のターゲットは変更できる
+    allData.bulletData.objId[4] = OBJ_ID::HUMAN;//最後のターゲットは変更できる
 
     allData.satelliteData[0].pos.set(4, 5, 0);
     allData.satelliteData[0].moveRange = 5;
     allData.satelliteData[0].advSpeed = 0.01f;
     allData.satelliteData[0].rotSpeed = 0.05f;
+    allData.satelliteData[0].rotBackSpeed = 0.025f;
     allData.satelliteData[0].preObjId = OBJ_ID::CANNON;
     allData.satelliteData[0].postObjId = OBJ_ID::SATELLITE2;
     allData.satelliteData[0].bodyColor.set(255, 255, 0);
@@ -54,6 +59,7 @@ void setAllData(ALL_DATA& allData)
     allData.satelliteData[1].moveRange = 5;
     allData.satelliteData[1].advSpeed = -0.01f;
     allData.satelliteData[1].rotSpeed = 0.05f;
+    allData.satelliteData[1].rotBackSpeed = 0.025f;
     allData.satelliteData[1].preObjId = OBJ_ID::SATELLITE1;
     allData.satelliteData[1].postObjId = allData.bulletData.objId[2];
     allData.satelliteData[1].bodyColor.set(255, 255, 0);
@@ -65,8 +71,10 @@ void setAllData(ALL_DATA& allData)
 
     allData.enemyData.pos.set(6, 1.4f, 6);
     allData.enemyData.animSpeed = 0.4f;
-    allData.enemyData.headColor.set(90,90,90);
-    
+    allData.enemyData.headColor.set(90, 90, 90);
+    allData.enemyData.stickColor.set(255,255,255);
+    allData.enemyData.ambient = 0.4f;
+
     allData.humanData.pos.set(9, 0, 9);
     allData.humanData.animSpeed = 0.06f;
     allData.humanData.c1 = COLOR(62, 66, 163);
@@ -79,7 +87,13 @@ void setAllData(ALL_DATA& allData)
     allData.snowManData.pos.set(-9, 1.2f, 9);
     allData.snowManData.ambient = 0.5f;
 
-#define TEST_
+    allData.rotationCompletedFlags = 
+        allData.cannonData.endOfRotationFlag |
+        allData.satelliteData[0].endOfRotationFlag |
+        allData.satelliteData[1].endOfRotationFlag;
+    allData.flyingCompletedFlags = 1;
+
+#define TEST_B
 #ifdef TEST_A
     allData.cannonData.pos.set(-3, 0.8f, 6);
     allData.satelliteData[0].pos.set(-3, 0.8f, 0);

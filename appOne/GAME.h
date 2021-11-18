@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "ALL_DATA.h"
-#include "OBJ_ID.h"
 class GAME
 {
 public:
@@ -11,18 +10,17 @@ public:
     void run();
 
     //Data
-    ALL_DATA allData;
+    const ALL_DATA* allData();
 
     //Objects
     class OBJECT* object(OBJ_ID id);
     int addObject(OBJ_ID id, class OBJECT*);
 
-    //States
-    enum class STATE { MOVE, ROTATE, FLY, ROTATE_BACK };
-    STATE state();
-    void stateManager();
+    //Object state
+    OBJ_STATE objState();
+    void objStateManager();
 private:
+    ALL_DATA AllData;
     std::vector<class OBJECT*> Objects;
-    STATE State;
-    int Count;
+    OBJ_STATE ObjState;
 };

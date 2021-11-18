@@ -2,11 +2,9 @@
 
 #include "MATRIX.h"
 #include "COLOR.h"
-#include "GAME_OBJECT.h"
 #include "OBJ_ID.h"
 #include "OBJECT.h"
 class CANNON :
-    public GAME_OBJECT,
     public OBJECT
 {
 public:
@@ -26,6 +24,7 @@ public:
         float advSpeed;
         float advRotSpeed;
         float rotSpeed;
+        float rotBackSpeed;
         int endOfRotationFlag;
         OBJ_ID objId;
     };

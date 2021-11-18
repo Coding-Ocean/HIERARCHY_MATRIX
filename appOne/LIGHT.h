@@ -1,8 +1,6 @@
 #pragma once
-#include "GAME_OBJECT.h"
 #include "OBJECT.h"
 class LIGHT :
-    public GAME_OBJECT,
     public OBJECT
 {
 public:
