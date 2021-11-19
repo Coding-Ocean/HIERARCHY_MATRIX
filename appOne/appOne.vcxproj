@@ -187,6 +187,7 @@
     <ClInclude Include="CYLINDER.h" />
     <ClInclude Include="ENEMY.h" />
     <ClInclude Include="FLOOR.h" />
+    <ClInclude Include="FORMATION_DATA.h" />
     <ClInclude Include="GAME.h" />
     <ClInclude Include="GAME_POINTER.h" />
     <ClInclude Include="HUMAN.h" />

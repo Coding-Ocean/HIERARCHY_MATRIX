@@ -1,14 +1,5 @@
 #include "GAME.h"
-#include "CAMERA.h"
-#include "PROJECTOR.h"
-#include "LIGHT.h"
-#include "FLOOR.h"
-#include "CANNON.h"
-#include "BULLET.h"
-#include "SATELLITE.h"
-#include "ENEMY.h"
-#include "SNOW_MAN.h"
-#include "HUMAN.h"
+
 GAME::GAME()
     :Objects(static_cast<int>(OBJ_ID::NUM_OBJECTS), nullptr)
 {

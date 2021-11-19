@@ -170,5 +170,8 @@
     <ClInclude Include="ALL_DATA.h">
       <Filter>ALL_DATA</Filter>
     </ClInclude>
+    <ClInclude Include="FORMATION_DATA.h">
+      <Filter>ALL_DATA</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

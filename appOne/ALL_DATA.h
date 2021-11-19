@@ -9,14 +9,7 @@
 #include "ENEMY.h"
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
-struct FORMATION_DATA {
-    VECTOR cannonPos;
-    VECTOR satellitePos[2];
-    VECTOR enemyPos;
-    float satelliteAdvSpeed[2];
-    float bulletAdvSpeed;
-};
-
+#include "FORMATION_DATA.h"
 
 struct ALL_DATA {
     float w, h;

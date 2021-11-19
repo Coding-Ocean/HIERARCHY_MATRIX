@@ -12,7 +12,8 @@ public:
     VECTOR pos();
     struct DATA {
         VECTOR pos;
-        VECTOR angle;
+        int range;
+        float scale;
         COLOR color[2];
     };
 private:

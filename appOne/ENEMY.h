@@ -21,10 +21,10 @@ public:
     };
 private:
     DATA Data;
-    float AnimAngle = 0;
     SPHERE Sphere;
     CYLINDER Cylinder;
     MATRIX StickModel, HeadModel, NucleusModel;
     MATRIX Master, Stick, Head, NucleusA, NucleusB;
+    float AnimAngle = 0;
 };
 

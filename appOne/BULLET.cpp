@@ -21,7 +21,7 @@ int BULLET::setup()
         Targets[i] = game()->object(Data.objId[i]);
     }
 
-    Cone = new CONE;
+    Cone = new CONE(36,1.5f);
 
     return 0;
 }
