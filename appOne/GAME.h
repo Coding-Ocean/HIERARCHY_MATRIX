@@ -7,11 +7,10 @@ public:
     GAME();
     ~GAME();
     int setup();
+    int addObject(OBJ_ID id, class OBJECT* object);
     void run();
-    //All Data
+    //getter
     const ALL_DATA* allData();
-    //Objects
-    int addObject(OBJ_ID id, class OBJECT*);
     class OBJECT* object(OBJ_ID id);
 private:
     ALL_DATA AllData;

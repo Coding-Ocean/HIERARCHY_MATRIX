@@ -19,6 +19,8 @@ struct FORMATION_DATA {
 
 
 struct ALL_DATA {
+    float w, h;
+    int windowFlag;
     CAMERA::DATA cameraData;
     PROJECTOR::DATA projectorData;
     LIGHT::DATA lightData;

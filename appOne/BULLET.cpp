@@ -30,7 +30,8 @@ void BULLET::update()
 {
     if (objState() == OBJ_STATE::MOVE) {
         if (isTrigger(KEY_X)) {
-            const FORMATION_DATA& fd = game()->allData()->formationData[FormationId];
+            int id = formationId();
+            const FORMATION_DATA& fd = game()->allData()->formationData[id];
             Data.advSpeed = fd.bulletAdvSpeed;
         }
 

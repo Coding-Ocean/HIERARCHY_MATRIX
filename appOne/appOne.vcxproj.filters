@@ -20,6 +20,12 @@
     <Filter Include="OBJECT\BASE">
       <UniqueIdentifier>{b0c4b531-deaa-4c21-bf49-be8a97655849}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GAME">
+      <UniqueIdentifier>{c5a73cee-8480-4a50-b2e5-0de6c16d831a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ALL_DATA">
+      <UniqueIdentifier>{375d33e4-3d2d-4cbb-b9d2-81bb0c6c6f80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -57,7 +63,6 @@
     <ClCompile Include="OBJECT.cpp">
       <Filter>OBJECT\BASE</Filter>
     </ClCompile>
-    <ClCompile Include="GAME.cpp" />
     <ClCompile Include="BULLET.cpp">
       <Filter>OBJECT</Filter>
     </ClCompile>
@@ -70,8 +75,15 @@
     <ClCompile Include="ENEMY.cpp">
       <Filter>OBJECT</Filter>
     </ClCompile>
-    <ClCompile Include="ALL_DATA.cpp" />
-    <ClCompile Include="GAME_POINTER.cpp" />
+    <ClCompile Include="GAME.cpp">
+      <Filter>GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME_POINTER.cpp">
+      <Filter>GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="ALL_DATA.cpp">
+      <Filter>ALL_DATA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BARREL.h">
@@ -128,7 +140,6 @@
     <ClInclude Include="OBJECT.h">
       <Filter>OBJECT\BASE</Filter>
     </ClInclude>
-    <ClInclude Include="GAME.h" />
     <ClInclude Include="BULLET.h">
       <Filter>OBJECT</Filter>
     </ClInclude>
@@ -141,16 +152,23 @@
     <ClInclude Include="ENEMY.h">
       <Filter>OBJECT</Filter>
     </ClInclude>
-    <ClInclude Include="ALL_DATA.h" />
     <ClInclude Include="OBJ_ID.h">
       <Filter>OBJECT\BASE</Filter>
     </ClInclude>
     <ClInclude Include="OBJ_STATE.h">
       <Filter>OBJECT\BASE</Filter>
     </ClInclude>
-    <ClInclude Include="GAME_POINTER.h" />
     <ClInclude Include="PLANE.h">
       <Filter>MODEL</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME.h">
+      <Filter>GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME_POINTER.h">
+      <Filter>GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="ALL_DATA.h">
+      <Filter>ALL_DATA</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

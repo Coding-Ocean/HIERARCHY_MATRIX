@@ -26,10 +26,10 @@ int SATELLITE::setup()
 
 void SATELLITE::update()
 {
-
     if (objState() == OBJ_STATE::MOVE) {
         if (isTrigger(KEY_X)) {
-            const FORMATION_DATA& fd = game()->allData()->formationData[FormationId];
+            int id = formationId();
+            const FORMATION_DATA& fd = game()->allData()->formationData[id];
             Data.pos = fd.satellitePos[Id];
             Data.advSpeed = fd.satelliteAdvSpeed[Id];
             AngleForPos = 0;
@@ -40,7 +40,7 @@ void SATELLITE::update()
 
     if (objState() == OBJ_STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
-        //”ò‚ñ‚Å—ˆ‚½•ûŒüa‚Æ”ò‚ñ‚Ås‚­•ûŒüb‚ð‚Q•ª‚µ‚½•ûŒüdir‚ð‹‚ß‚é
+        //dir‚Í”ò‚ñ‚Å—ˆ‚½•ûŒüa‚Æ”ò‚ñ‚Ås‚­•ûŒüb‚ð‚Q•ª‚µ‚½•ûŒü
         VECTOR a = game()->object(Data.preObjId)->pos() - Data.pos;
         VECTOR b = game()->object(Data.postObjId)->pos() - Data.pos;
         a.normalize();

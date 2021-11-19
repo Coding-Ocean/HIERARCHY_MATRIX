@@ -23,10 +23,9 @@ int GAME::setup()
 {
     setAllData(AllData);
 
-    window(1920, 1080, full);
+    window(AllData.w, AllData.h, AllData.windowFlag);
     hideCursor();
     
-    //Objects
     addObject(OBJ_ID::CAMERA, new CAMERA(this));
     addObject(OBJ_ID::PROJECTOR, new PROJECTOR(this));
     addObject(OBJ_ID::LIGHT, new LIGHT(this));
@@ -37,8 +36,7 @@ int GAME::setup()
     addObject(OBJ_ID::SATELLITE2, new SATELLITE(this));
     addObject(OBJ_ID::ENEMY, new ENEMY(this));
     addObject(OBJ_ID::SNOW_MAN, new SNOW_MAN(this));
-    //addObject(OBJ_ID::HUMAN, new HUMAN(this));
-    new HUMAN(this, OBJ_ID::HUMAN);
+    addObject(OBJ_ID::HUMAN, new HUMAN(this));
 
     for (OBJECT* object : Objects)object->setup();
 

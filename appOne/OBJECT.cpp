@@ -39,7 +39,7 @@ VECTOR OBJECT::angle()
 
 //以下ステート変更関係------------------------------------------------------
 
-//回転制御。指定した方向にゆっくり向ける。向き終わったら個別にフラグを立てる。
+//回転制御。指定した方向にゆっくり向ける。向き終わったらフラグを立てる。
 int OBJECT::rotate(
     VECTOR* angle, const VECTOR& dir, float rotSpeed, int endOfRotationFlag)
 {
@@ -61,38 +61,28 @@ int OBJECT::rotate(
     return 0;
 }
 
-//OBJ_STATE::FLYが終了したときに使う
+//弾が最終ターゲットに当たった時に呼び出してフラグを立てる
 void OBJECT::completeState()
 {
     EndOfStateFlags = CompletedFlags;
 }
 
 //以下スタティックメンバ--------------------------------------------------
+OBJ_STATE OBJECT::ObjState = OBJ_STATE::MOVE;
 int OBJECT::EndOfStateFlags = 0;
 int OBJECT::CompletedFlags = 0;
-
-void OBJECT::resetEndFlags(int completedFlags)
-{
-    EndOfStateFlags = 0;
-    CompletedFlags = completedFlags;
-}
-
-int OBJECT::endOfState()
-{
-    return EndOfStateFlags == CompletedFlags;
-}
-
 int OBJECT::RotationCompletedFlags = 0b111;
 int OBJECT::FlyingCompletedFlags = 0b1;
-OBJ_STATE OBJECT::ObjState = OBJ_STATE::MOVE;
+int OBJECT::FormationId = 0;
 
 void OBJECT::objStateManager()
 {
-
     if (ObjState == OBJ_STATE::MOVE) {
+        //フォーメーション切り替え
         if (isTrigger(KEY_X)) {
             ++FormationId %= 3;
         }
+        //回転開始
         if (isTrigger(KEY_Z)) {
             OBJECT::resetEndFlags(RotationCompletedFlags);
             ObjState = OBJ_STATE::ROTATE;
@@ -120,9 +110,23 @@ void OBJECT::objStateManager()
     }
 }
 
+void OBJECT::resetEndFlags(int completedFlags)
+{
+    EndOfStateFlags = 0;
+    CompletedFlags = completedFlags;
+}
+
+int OBJECT::endOfState()
+{
+    return EndOfStateFlags == CompletedFlags;
+}
+
 OBJ_STATE OBJECT::objState()
 {
     return ObjState;
 }
 
-int OBJECT::FormationId = 0;
+int OBJECT::formationId() 
+{
+    return FormationId;
+}
