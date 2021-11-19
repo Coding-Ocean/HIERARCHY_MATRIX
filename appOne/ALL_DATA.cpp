@@ -34,12 +34,12 @@ void setAllData(ALL_DATA& allData)
     allData.bulletData.collisionDistance = 0.3f;
     allData.bulletData.color.set(255, 60, 60);
     allData.bulletData.ambient = 0.5f;
-    allData.bulletData.numTargets = 5;//最大８
+    allData.bulletData.numTargets = 3;//最大８
     allData.bulletData.objId[0] = OBJ_ID::SATELLITE1;
     allData.bulletData.objId[1] = OBJ_ID::SATELLITE2;
     allData.bulletData.objId[2] = OBJ_ID::ENEMY;//最後のターゲットは変更できる
-    allData.bulletData.objId[3] = OBJ_ID::SNOW_MAN;//最後のターゲットは変更できる
-    allData.bulletData.objId[4] = OBJ_ID::HUMAN;//最後のターゲットは変更できる
+    //allData.bulletData.objId[3] = OBJ_ID::SNOW_MAN;//最後のターゲットは変更できる
+    //allData.bulletData.objId[4] = OBJ_ID::HUMAN;//最後のターゲットは変更できる
 
     allData.satelliteData[0].pos.set(4, 5, 0);
     allData.satelliteData[0].moveRange = 5;
@@ -87,13 +87,14 @@ void setAllData(ALL_DATA& allData)
     allData.snowManData.pos.set(-9, 1.2f, 9);
     allData.snowManData.ambient = 0.5f;
 
+    //OBJECTのstaticメンバーに渡す
     allData.rotationCompletedFlags = 
         allData.cannonData.endOfRotationFlag |
         allData.satelliteData[0].endOfRotationFlag |
         allData.satelliteData[1].endOfRotationFlag;
     allData.flyingCompletedFlags = 1;
 
-#define TEST_B
+#define TEST_
 #ifdef TEST_A
     allData.cannonData.pos.set(-3, 0.8f, 6);
     allData.satelliteData[0].pos.set(-3, 0.8f, 0);

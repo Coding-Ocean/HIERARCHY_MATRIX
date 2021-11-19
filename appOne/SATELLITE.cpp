@@ -26,12 +26,12 @@ int SATELLITE::setup()
 
 void SATELLITE::update()
 {
-    if (game()->objState() == OBJ_STATE::MOVE) {
+    if (objState() == OBJ_STATE::MOVE) {
         Data.pos.z = sin(AngleForPos) * Data.moveRange;
         AngleForPos += Data.advSpeed;
     }
 
-    if (game()->objState() == OBJ_STATE::ROTATE) {
+    if (objState() == OBJ_STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
         //”ò‚ñ‚Å—ˆ‚½•ûŒüa‚Æ”ò‚ñ‚Ås‚­•ûŒüb‚ð‚Q•ª‚µ‚½•ûŒüdir‚ð‹‚ß‚é
         VECTOR a = game()->object(Data.preObjId)->pos() - Data.pos;
@@ -43,7 +43,7 @@ void SATELLITE::update()
         rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
     }
 
-    if (game()->objState() == OBJ_STATE::ROTATE_BACK) {
+    if (objState() == OBJ_STATE::ROTATE_BACK) {
         //‰ñ“]
         VECTOR dir(0, 0, 1);
         rotate(&Data.angle, dir, Data.rotBackSpeed, Data.endOfRotationFlag);

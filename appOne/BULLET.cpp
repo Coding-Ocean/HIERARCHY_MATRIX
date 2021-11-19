@@ -28,17 +28,17 @@ int BULLET::setup()
 
 void BULLET::update()
 {
-    if (game()->objState() == OBJ_STATE::MOVE) {
+    if (objState() == OBJ_STATE::MOVE) {
         Data.pos = game()->object(OBJ_ID::CANNON)->pos();
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
     }
 
-    if (game()->objState() == OBJ_STATE::ROTATE) {
+    if (objState() == OBJ_STATE::ROTATE) {
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
         TargetNo = 0;
     }
 
-    if (game()->objState() == OBJ_STATE::FLY) {
+    if (objState() == OBJ_STATE::FLY) {
         if (TargetNo < Data.numTargets) {
             VECTOR dir = Targets[TargetNo]->pos() - Data.pos;
             float distance = dir.mag();

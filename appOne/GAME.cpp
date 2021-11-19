@@ -41,8 +41,6 @@ int GAME::setup()
 
     for (OBJECT* object : Objects)object->setup();
 
-    ObjState = OBJ_STATE::MOVE;
-
     return 0;
 }
 
@@ -58,7 +56,7 @@ void GAME::run()
         clear(0, 0, 40);
         for (OBJECT* object : Objects)object->update();
         for (OBJECT* object : Objects)object->draw();
-        objStateManager();
+        OBJECT::objStateManager();
     }
 }
 
@@ -67,43 +65,7 @@ const ALL_DATA* GAME::allData()
     return &AllData;
 }
 
-void GAME::objStateManager()
-{
-    if (ObjState == OBJ_STATE::MOVE) {
-        if (isTrigger(KEY_Z)) {
-            OBJECT::resetEndFlags(AllData.rotationCompletedFlags);
-            ObjState = OBJ_STATE::ROTATE;
-        }
-    }
-
-    else if (ObjState == OBJ_STATE::ROTATE) {
-        if (OBJECT::endOfState()) {
-            OBJECT::resetEndFlags(AllData.flyingCompletedFlags);
-            ObjState = OBJ_STATE::FLY;
-        }
-    }
-
-    else if (ObjState == OBJ_STATE::FLY) {
-        if (OBJECT::endOfState()) {
-            OBJECT::resetEndFlags(AllData.rotationCompletedFlags);
-            ObjState = OBJ_STATE::ROTATE_BACK;
-        }
-    }
-
-    else if (ObjState == OBJ_STATE::ROTATE_BACK) {
-        if (OBJECT::endOfState()){
-            ObjState = OBJ_STATE::MOVE;
-        }
-    }
-}
-
 OBJECT* GAME::object(OBJ_ID id)
 {
     return Objects[static_cast<int>(id)];
 }
-
-OBJ_STATE GAME::objState()
-{
-    return ObjState;
-}
-

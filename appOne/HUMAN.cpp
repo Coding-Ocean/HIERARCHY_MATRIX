@@ -35,7 +35,7 @@ int HUMAN::setup()
     return 0;
 }
 void HUMAN::update() {
-    if (game()->objState() == OBJ_STATE::ROTATE_BACK) {
+    if (objState() == OBJ_STATE::ROTATE_BACK) {
         AnimAngle = 0;
     }
     else {

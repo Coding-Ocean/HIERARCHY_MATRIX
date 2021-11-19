@@ -9,6 +9,7 @@
 #include "ENEMY.h"
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
+
 struct ALL_DATA {
     CAMERA::DATA cameraData;
     PROJECTOR::DATA projectorData;
@@ -20,7 +21,9 @@ struct ALL_DATA {
     ENEMY::DATA enemyData;
     SNOW_MAN::DATA snowManData;
     HUMAN::DATA humanData;
+    //OBJECTのstaticメンバーに渡すデータ
     int rotationCompletedFlags;
     int flyingCompletedFlags;
 };
+
 void setAllData(ALL_DATA& allData);

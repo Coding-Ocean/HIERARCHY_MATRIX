@@ -89,9 +89,6 @@
     <ClInclude Include="JAG.h">
       <Filter>MODEL</Filter>
     </ClInclude>
-    <ClInclude Include="PLANE.h">
-      <Filter>MODEL</Filter>
-    </ClInclude>
     <ClInclude Include="POLYGON.h">
       <Filter>MODEL</Filter>
     </ClInclude>
@@ -152,5 +149,8 @@
       <Filter>OBJECT\BASE</Filter>
     </ClInclude>
     <ClInclude Include="GAME_POINTER.h" />
+    <ClInclude Include="PLANE.h">
+      <Filter>MODEL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
