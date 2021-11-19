@@ -37,7 +37,8 @@ int GAME::setup()
     addObject(OBJ_ID::SATELLITE2, new SATELLITE(this));
     addObject(OBJ_ID::ENEMY, new ENEMY(this));
     addObject(OBJ_ID::SNOW_MAN, new SNOW_MAN(this));
-    addObject(OBJ_ID::HUMAN, new HUMAN(this));
+    //addObject(OBJ_ID::HUMAN, new HUMAN(this));
+    new HUMAN(this, OBJ_ID::HUMAN);
 
     for (OBJECT* object : Objects)object->setup();
 
@@ -54,9 +55,9 @@ void GAME::run()
 {
     while (notQuit) {
         clear(0, 0, 40);
+        OBJECT::objStateManager();
         for (OBJECT* object : Objects)object->update();
         for (OBJECT* object : Objects)object->draw();
-        OBJECT::objStateManager();
     }
 }
 

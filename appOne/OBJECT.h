@@ -44,4 +44,6 @@ private:
     //(‚±‚±‚ª“ï‰ğ‚·‚¬‚é‚ªA¡‚Ì‚Æ‚±‚ë‚±‚ê‚µ‚©v‚¢‚Â‚©‚È‚¢)
     static int RotationCompletedFlags;
     static int FlyingCompletedFlags;
+protected:
+    static int FormationId;
 };

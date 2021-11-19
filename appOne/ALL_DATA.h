@@ -9,6 +9,14 @@
 #include "ENEMY.h"
 #include "SNOW_MAN.h"
 #include "HUMAN.h"
+struct FORMATION_DATA {
+    VECTOR cannonPos;
+    VECTOR satellitePos[2];
+    VECTOR enemyPos;
+    float satelliteAdvSpeed[2];
+    float bulletAdvSpeed;
+};
+
 
 struct ALL_DATA {
     CAMERA::DATA cameraData;
@@ -24,6 +32,8 @@ struct ALL_DATA {
     //OBJECTのstaticメンバーに渡すデータ
     int rotationCompletedFlags;
     int flyingCompletedFlags;
+    //フォーメーションデータ
+    FORMATION_DATA formationData[3];
 };
 
 void setAllData(ALL_DATA& allData);

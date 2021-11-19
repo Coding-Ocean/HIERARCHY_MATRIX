@@ -88,7 +88,11 @@ OBJ_STATE OBJECT::ObjState = OBJ_STATE::MOVE;
 
 void OBJECT::objStateManager()
 {
+
     if (ObjState == OBJ_STATE::MOVE) {
+        if (isTrigger(KEY_X)) {
+            ++FormationId %= 3;
+        }
         if (isTrigger(KEY_Z)) {
             OBJECT::resetEndFlags(RotationCompletedFlags);
             ObjState = OBJ_STATE::ROTATE;
@@ -120,3 +124,5 @@ OBJ_STATE OBJECT::objState()
 {
     return ObjState;
 }
+
+int OBJECT::FormationId = 0;

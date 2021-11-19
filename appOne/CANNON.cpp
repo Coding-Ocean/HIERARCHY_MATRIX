@@ -31,6 +31,10 @@ int CANNON::setup()
 void CANNON::update()
 {
     if (objState()==OBJ_STATE::MOVE) {
+        if (isTrigger(KEY_X)) {
+            const FORMATION_DATA& fd = game()->allData()->formationData[FormationId];
+            Data.pos = fd.cannonPos;
+        }
         //ˆÚ“®•ûŒü‚ðŒˆ‚ß‚é
         VECTOR dir(0, 0, 0);
         if (isPress(KEY_D)) { dir.x = 1; }

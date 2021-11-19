@@ -1,8 +1,11 @@
 #include "GAME.h"
 #include "HUMAN.h"
-HUMAN::HUMAN(class GAME* game)
+HUMAN::HUMAN(class GAME* game, OBJ_ID objId)
     :OBJECT(game)
 {
+    if (objId != OBJ_ID::NUM_OBJECTS) {
+        game->addObject(objId, this);
+    }
 }
 int HUMAN::setup()
 {
@@ -17,7 +20,6 @@ int HUMAN::setup()
     HeadModel.mulTranslate(0, 0.5f, 0);
     MouseModel.scaling(0.08f, 0.03f, 0.2f);
     EyeModel.scaling(0.02f, 0.02f, 0.2f);
-    //mHairModel.scaling(0.22f, 0.15f, 0.25f);
     HairModel.scaling(0.25f, 0.15f, 0.25f);
     HairModel.mulTranslate(0, 0.5f, 0);
     Arm1Model.scaling(0.05f, 0.4f, 0.05f);
@@ -35,10 +37,7 @@ int HUMAN::setup()
     return 0;
 }
 void HUMAN::update() {
-    if (objState() == OBJ_STATE::ROTATE_BACK) {
-        AnimAngle = 0;
-    }
-    else {
+    if (objState() != OBJ_STATE::ROTATE_BACK) {
         AnimAngle += Data.animSpeed;
     }
 

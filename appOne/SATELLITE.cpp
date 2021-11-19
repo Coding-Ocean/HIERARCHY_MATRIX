@@ -26,7 +26,14 @@ int SATELLITE::setup()
 
 void SATELLITE::update()
 {
+
     if (objState() == OBJ_STATE::MOVE) {
+        if (isTrigger(KEY_X)) {
+            const FORMATION_DATA& fd = game()->allData()->formationData[FormationId];
+            Data.pos = fd.satellitePos[Id];
+            Data.advSpeed = fd.satelliteAdvSpeed[Id];
+            AngleForPos = 0;
+        }
         Data.pos.z = sin(AngleForPos) * Data.moveRange;
         AngleForPos += Data.advSpeed;
     }

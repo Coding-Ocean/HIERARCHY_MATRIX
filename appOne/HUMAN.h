@@ -6,7 +6,7 @@ class HUMAN :
     public OBJECT
 {
 public:
-    HUMAN(class GAME* game);
+    HUMAN(class GAME* game, OBJ_ID objId = OBJ_ID::NUM_OBJECTS);
     int setup();
     void update();
     void draw();

@@ -25,6 +25,13 @@ int ENEMY::setup()
 
 void ENEMY::update()
 {
+    if (objState() == OBJ_STATE::MOVE) {
+        if (isTrigger(KEY_X)) {
+            const FORMATION_DATA& fd = game()->allData()->formationData[FormationId];
+            Data.pos = fd.enemyPos;
+        }
+    }
+
     if (objState()==OBJ_STATE::ROTATE_BACK) {
         AnimAngle = 0;
     }

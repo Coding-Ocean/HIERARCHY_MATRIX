@@ -41,5 +41,6 @@ private:
 
     float AnimAngle = 0;
     float AngleForPos = 0;
+
 };
 

@@ -29,6 +29,11 @@ int BULLET::setup()
 void BULLET::update()
 {
     if (objState() == OBJ_STATE::MOVE) {
+        if (isTrigger(KEY_X)) {
+            const FORMATION_DATA& fd = game()->allData()->formationData[FormationId];
+            Data.advSpeed = fd.bulletAdvSpeed;
+        }
+
         Data.pos = game()->object(OBJ_ID::CANNON)->pos();
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
     }

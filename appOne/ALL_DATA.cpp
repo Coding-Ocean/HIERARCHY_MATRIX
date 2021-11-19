@@ -94,6 +94,31 @@ void setAllData(ALL_DATA& allData)
         allData.satelliteData[1].endOfRotationFlag;
     allData.flyingCompletedFlags = 1;
 
+    //フォーメーション変更データ
+    allData.formationData[0].cannonPos.set(-3, 0.8f, 0);
+    allData.formationData[0].satellitePos[0].set(4, 5, 0);
+    allData.formationData[0].satelliteAdvSpeed[0] = 0.01f;
+    allData.formationData[0].satellitePos[1].set(-4, 6, 0);
+    allData.formationData[0].satelliteAdvSpeed[1] = -0.01f;
+    allData.formationData[0].enemyPos.set(6, 1.4f, 6);
+    allData.formationData[0].bulletAdvSpeed = 0.2f;
+
+    allData.formationData[1].cannonPos.set(-3, 0.8f, 6);
+    allData.formationData[1].satellitePos[0].set(-3, 0.8f, 0);
+    allData.formationData[1].satelliteAdvSpeed[0] = 0;
+    allData.formationData[1].satellitePos[1].set(3, 0.8f, 0);
+    allData.formationData[1].satelliteAdvSpeed[1] = 0;
+    allData.formationData[1].enemyPos.set(3, 0.8f, 6);
+    allData.formationData[1].bulletAdvSpeed = 0.1f;
+
+    allData.formationData[2].cannonPos.set(-3, 0.8f, 0);
+    allData.formationData[2].satellitePos[0].set(-3, 6.8f, 0);
+    allData.formationData[2].satelliteAdvSpeed[0] = 0;
+    allData.formationData[2].satellitePos[1].set(3, 6.8f, 0);
+    allData.formationData[2].satelliteAdvSpeed[1] = 0;
+    allData.formationData[2].enemyPos.set(3, 1.4f, 0);
+    allData.formationData[2].bulletAdvSpeed = 0.1f;
+
 #define TEST_
 #ifdef TEST_A
     allData.cannonData.pos.set(-3, 0.8f, 6);
