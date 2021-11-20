@@ -17,18 +17,23 @@ public:
     struct DATA {
         VECTOR pos;
         VECTOR angle;
+        float radius;
+        float length;
         float advSpeed;
         float rotSpeed;
         int numTargets;
-        OBJ_ID objId[8];
+        OBJ_ID objId[8];//３つしか使っていない
         float collisionDistance;
         COLOR color;
         float ambient;
     };
 private:
+    //Data
     DATA Data;
-    OBJECT** Targets;
-    int TargetNo = 0;
+    OBJECT** Targets;//全ターゲットの配列
+    int TargetNo = 0;//今向かっているターゲット
+    //Model
     CONE* Cone;
+    //Matrix
     MATRIX Master;
 };

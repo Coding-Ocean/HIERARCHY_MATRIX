@@ -49,7 +49,7 @@ void CAMERA::update(){
     Data.pos.z = cos(Data.angle.y) * cos(Data.angle.x) * Data.distance + TargetPos.z;
     UpVec.y = cos(Data.angle.x);
     MODEL::view.camera(Data.pos, TargetPos, UpVec);
-#ifdef _DEBUG
+#ifdef _DEBUG_
     print((let)"Data.angle.y=" + Data.angle.y);
     print((let)"Data.angle.x=" + Data.angle.x);
     print((let)"Data.distance=" + Data.distance);

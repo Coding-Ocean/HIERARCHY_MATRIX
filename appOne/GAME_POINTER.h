@@ -1,4 +1,5 @@
 #pragma once
+//#define _DEBUG_
 class GAME_POINTER
 {
 public:
@@ -8,4 +9,3 @@ public:
 private:
     class GAME* Game = 0;
 };
-

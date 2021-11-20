@@ -13,7 +13,7 @@
 
 struct ALL_DATA {
     float w, h;
-    int windowFlag;
+    int fullScreenFlag;
     CAMERA::DATA cameraData;
     PROJECTOR::DATA projectorData;
     LIGHT::DATA lightData;

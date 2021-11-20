@@ -3,7 +3,7 @@ void setAllData(ALL_DATA& ad)
 {
     ad.w = 1600;
     ad.h = 900;
-    ad.windowFlag = 1;
+    ad.fullScreenFlag = 1;
 
     ad.cameraData.angle.set(0.32f, 0, 0);
     ad.cameraData.targetIdx = 0;
@@ -34,7 +34,9 @@ void setAllData(ALL_DATA& ad)
     ad.cannonData.ambient = 0.3f;
     ad.cannonData.endOfRotationFlag = 0b0001;
     ad.cannonData.objId = OBJ_ID::SATELLITE1;
-
+    
+    ad.bulletData.radius = 0.3f;
+    ad.bulletData.length = 1.1f;
     ad.bulletData.advSpeed = 0.2f;
     ad.bulletData.rotSpeed = 0.25f;
     ad.bulletData.collisionDistance = 0.6f;
@@ -45,7 +47,7 @@ void setAllData(ALL_DATA& ad)
     ad.bulletData.objId[2] = OBJ_ID::ENEMY;//最後のターゲットは変更できる
     ad.bulletData.objId[3] = OBJ_ID::SNOW_MAN;//最後のターゲットは変更できる
     ad.bulletData.objId[4] = OBJ_ID::HUMAN;//最後のターゲットは変更できる
-    ad.bulletData.numTargets = 5;//最大８
+    ad.bulletData.numTargets = 3;//最大８
 
     ad.satelliteData[0].pos.set(4, 5, 0);
     ad.satelliteData[0].moveRange = 5;
@@ -93,7 +95,7 @@ void setAllData(ALL_DATA& ad)
     ad.snowManData.pos.set(-9, 1.2f, 9);
     ad.snowManData.ambient = 0.5f;
 
-    //OBJECTのstaticメンバーに渡す
+    //OBJECTのstaticメンバーに渡す、ステート終了時状態のフラッグス
     ad.rotationCompletedFlags = 
         ad.cannonData.endOfRotationFlag |
         ad.satelliteData[0].endOfRotationFlag |

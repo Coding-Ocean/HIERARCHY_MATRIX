@@ -1,11 +1,10 @@
-#include "..\libOne\inc\input.h"
-#include "mathUtil.h"
 #include "GAME.h"
 #include "OBJECT.h"
 
 OBJECT::OBJECT(GAME* game)
     :GAME_POINTER(game)
 {
+    //ステート終了時のフラッグの状態
     RotationCompletedFlags = game->allData()->rotationCompletedFlags;
     FlyingCompletedFlags = game->allData()->flyingCompletedFlags;;
 }
@@ -37,7 +36,7 @@ VECTOR OBJECT::angle()
     return VECTOR();
 }
 
-//以下ステート変更関係------------------------------------------------------
+//各オブジェクトが個別に呼び出すメンバ----------------------------------------
 
 //回転制御。指定した方向にゆっくり向ける。向き終わったらフラグを立てる。
 int OBJECT::rotate(
@@ -61,13 +60,13 @@ int OBJECT::rotate(
     return 0;
 }
 
-//弾が最終ターゲットに当たった時に呼び出してフラグを立てる
+//弾が最終ターゲットに当たった時に呼び出してフラッグを立てる。
 void OBJECT::completeState()
 {
     EndOfStateFlags = CompletedFlags;
 }
 
-//以下スタティックメンバ--------------------------------------------------
+//全オブジェクトに影響するステート関連のスタティックメンバ-------------------
 OBJ_STATE OBJECT::ObjState = OBJ_STATE::MOVE;
 int OBJECT::EndOfStateFlags = 0;
 int OBJECT::CompletedFlags = 0;
@@ -75,52 +74,54 @@ int OBJECT::RotationCompletedFlags = 0b111;
 int OBJECT::FlyingCompletedFlags = 0b1;
 int OBJECT::FormationId = 0;
 
+//全オブジェクトのステートを管理する(メインループから呼び出されるメンバ)
 void OBJECT::objStateManager()
 {
     if (ObjState == OBJ_STATE::MOVE) {
-        //フォーメーション切り替え
+        //キー入力でフォーメーション切り替え
         if (isTrigger(KEY_X)) {
             ++FormationId %= 3;
         }
-        //回転開始
+        //キー入力で回転開始へ
         if (isTrigger(KEY_Z)) {
-            OBJECT::resetEndFlags(RotationCompletedFlags);
+            ResetEndFlags(RotationCompletedFlags);
             ObjState = OBJ_STATE::ROTATE;
         }
     }
     else if (ObjState == OBJ_STATE::ROTATE) {
-        //全オブジェクトの回転が終了したら
-        if (OBJECT::endOfState()) {
-            OBJECT::resetEndFlags(FlyingCompletedFlags);
+        //全オブジェクトの回転が終了したら、弾の飛行へ
+        if (EndOfState()) {
+            ResetEndFlags(FlyingCompletedFlags);
             ObjState = OBJ_STATE::FLY;
         }
     }
     else if (ObjState == OBJ_STATE::FLY) {
-        //弾が最終ターゲットに到達したら
-        if (OBJECT::endOfState()) {
-            OBJECT::resetEndFlags(RotationCompletedFlags);
+        //弾が最終ターゲットに到達したら、元の方向に回転開始へ
+        if (EndOfState()) {
+            ResetEndFlags(RotationCompletedFlags);
             ObjState = OBJ_STATE::ROTATE_BACK;
         }
     }
     else if (ObjState == OBJ_STATE::ROTATE_BACK) {
-        //全オブジェクトの回転が終了したら
-        if (OBJECT::endOfState()) {
+        //全オブジェクトが元の方向に回転し終わったら、通常の動きへ
+        if (EndOfState()) {
             ObjState = OBJ_STATE::MOVE;
         }
     }
 }
 
-void OBJECT::resetEndFlags(int completedFlags)
+void OBJECT::ResetEndFlags(int completedFlags)
 {
     EndOfStateFlags = 0;
     CompletedFlags = completedFlags;
 }
 
-int OBJECT::endOfState()
+int OBJECT::EndOfState()
 {
     return EndOfStateFlags == CompletedFlags;
 }
 
+//Getter
 OBJ_STATE OBJECT::objState()
 {
     return ObjState;

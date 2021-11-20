@@ -98,5 +98,3 @@ VECTOR CANNON::angle()
 {
     return Data.angle;
 }
-
-

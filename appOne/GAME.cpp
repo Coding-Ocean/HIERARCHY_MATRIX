@@ -14,8 +14,8 @@ int GAME::setup()
 {
     setAllData(AllData);
 
-    window(AllData.w, AllData.h, AllData.windowFlag);
-    hideCursor();
+    window(AllData.w, AllData.h, AllData.fullScreenFlag);
+    if (AllData.fullScreenFlag)hideCursor();
     
     addObject(OBJ_ID::CAMERA, new CAMERA(this));
     addObject(OBJ_ID::PROJECTOR, new PROJECTOR(this));
@@ -34,12 +34,6 @@ int GAME::setup()
     return 0;
 }
 
-int GAME::addObject(OBJ_ID id, OBJECT* object)
-{
-    Objects[static_cast<int>(id)] = object;
-    return static_cast<int>(id);
-}
-
 void GAME::run()
 {
     while (notQuit) {
@@ -48,6 +42,12 @@ void GAME::run()
         for (OBJECT* object : Objects)object->update();
         for (OBJECT* object : Objects)object->draw();
     }
+}
+
+int GAME::addObject(OBJ_ID id, OBJECT* object)
+{
+    Objects[static_cast<int>(id)] = object;
+    return static_cast<int>(id);
 }
 
 const ALL_DATA* GAME::allData()

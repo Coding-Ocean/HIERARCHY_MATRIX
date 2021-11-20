@@ -7,8 +7,9 @@ public:
     GAME();
     ~GAME();
     int setup();
-    int addObject(OBJ_ID id, class OBJECT* object);
     void run();
+    //setter
+    int addObject(OBJ_ID id, class OBJECT* object);
     //getter
     const ALL_DATA* allData();
     class OBJECT* object(OBJ_ID id);

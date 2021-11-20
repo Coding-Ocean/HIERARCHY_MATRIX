@@ -14,14 +14,16 @@ BULLET::~BULLET()
 
 int BULLET::setup()
 {
+    //Data
     Data = game()->allData()->bulletData;
-    
+    //この「ポインタ配列」の順に弾を飛ばす
     Targets = new OBJECT * [Data.numTargets];
     for (int i = 0; i < Data.numTargets; i++) {
         Targets[i] = game()->object(Data.objId[i]);
     }
 
-    Cone = new CONE(36,1.5f);
+    //Model
+    Cone = new CONE(36, Data.radius, Data.length);
 
     return 0;
 }
@@ -34,18 +36,20 @@ void BULLET::update()
             const FORMATION_DATA& fd = game()->allData()->formationData[id];
             Data.advSpeed = fd.bulletAdvSpeed;
         }
-
+        //キャノンの位置と角度をコピー
         Data.pos = game()->object(OBJ_ID::CANNON)->pos();
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
     }
 
     if (objState() == OBJ_STATE::ROTATE) {
+        //キャノンの角度をコピー
         Data.angle = game()->object(OBJ_ID::CANNON)->angle();
         TargetNo = 0;
     }
 
     if (objState() == OBJ_STATE::FLY) {
         if (TargetNo < Data.numTargets) {
+            //現在のターゲットに向かって回転しながら移動
             VECTOR dir = Targets[TargetNo]->pos() - Data.pos;
             float distance = dir.mag();
             Data.pos += dir.normalize() * Data.advSpeed;
@@ -63,7 +67,6 @@ void BULLET::update()
     Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);
     Master.mulRotateY(Data.angle.y);
     Master.mulRotateX(Data.angle.x);
-    Master.mulScaling(0.6f, 0.6f, 0.6f);
 }
 
 void BULLET::draw()

@@ -11,9 +11,6 @@
     <Filter Include="MODEL\BASE">
       <UniqueIdentifier>{310cba05-3651-4d8a-ba71-d46606b50e5a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SYS_OBJECT">
-      <UniqueIdentifier>{5c40aa78-71dd-4e96-909e-0e54a3845ef8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OBJECT">
       <UniqueIdentifier>{4229760c-61e0-4b40-8d20-5b72ea3782d8}</UniqueIdentifier>
     </Filter>
@@ -25,6 +22,9 @@
     </Filter>
     <Filter Include="ALL_DATA">
       <UniqueIdentifier>{375d33e4-3d2d-4cbb-b9d2-81bb0c6c6f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OBJECT\SYS_OBJECT">
+      <UniqueIdentifier>{5c40aa78-71dd-4e96-909e-0e54a3845ef8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,13 +43,13 @@
       <Filter>MODEL\BASE</Filter>
     </ClCompile>
     <ClCompile Include="CAMERA.cpp">
-      <Filter>SYS_OBJECT</Filter>
+      <Filter>OBJECT\SYS_OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="LIGHT.cpp">
-      <Filter>SYS_OBJECT</Filter>
+      <Filter>OBJECT\SYS_OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="PROJECTOR.cpp">
-      <Filter>SYS_OBJECT</Filter>
+      <Filter>OBJECT\SYS_OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="HUMAN.cpp">
       <Filter>OBJECT</Filter>
@@ -120,13 +120,13 @@
       <Filter>MODEL\BASE</Filter>
     </ClInclude>
     <ClInclude Include="CAMERA.h">
-      <Filter>SYS_OBJECT</Filter>
+      <Filter>OBJECT\SYS_OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="LIGHT.h">
-      <Filter>SYS_OBJECT</Filter>
+      <Filter>OBJECT\SYS_OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="PROJECTOR.h">
-      <Filter>SYS_OBJECT</Filter>
+      <Filter>OBJECT\SYS_OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="HUMAN.h">
       <Filter>OBJECT</Filter>

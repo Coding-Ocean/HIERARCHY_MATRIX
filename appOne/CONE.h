@@ -2,7 +2,7 @@
 #include"MODEL.h"
 class CONE : public MODEL {
 public:
-    CONE(int numCorners = 36, float topZ = 0.866f) {
+    CONE(int numCorners = 36, float radius = 0.5f, float topZ = 0.866f) {
         //各バッファを確保-------------------------------------------
         NumVertices = numCorners * 2;//側面
         NumVertices += numCorners + 1;//背面用追加
@@ -15,10 +15,9 @@ public:
         float* s = new float[numCorners];
         float* c = new float[numCorners];
         float angle = 3.1415926f * 2 / numCorners;
-        float r = 0.5f;//半径
         for (int i = 0; i < numCorners; i++) {
-            s[i] = sin(angle * i) * r;
-            c[i] = cos(angle * i) * r;
+            s[i] = sin(angle * i) * radius;
+            c[i] = cos(angle * i) * radius;
         }
         //側面「後ろ→前中心→後ろ→前中心・・・」と座標を並べていく
         int j = 0;

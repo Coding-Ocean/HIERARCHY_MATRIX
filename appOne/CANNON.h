@@ -29,9 +29,12 @@ public:
         OBJ_ID objId;
     };
 private:
+    //Data
     DATA Data;
     OBJECT* Target;
+    //Model
     class CYLINDER* Cylinder;
     class BARREL* Barrel;
+    //Hierarchy Matrix
     MATRIX Master, WheelL, WheelR, Body;
 };
