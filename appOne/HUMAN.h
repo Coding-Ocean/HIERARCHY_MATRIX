@@ -5,12 +5,14 @@
 class HUMAN : 
     public OBJECT
 {
+//functions
 public:
     HUMAN(class GAME* game, OBJ_ID objId = OBJ_ID::NUM_OBJECTS);
     int setup();
     void update();
     void draw();
     VECTOR pos();
+//data
 public:
     struct DATA {
         VECTOR pos;
@@ -19,9 +21,12 @@ public:
         float ambient;
     };
 private:
+    //data
     DATA Data;
-
+    float AnimAngle = 0;
+    //model
     CUBE Cube;
+    //matrix
     //上半身のパーツモデリング用マトリックス
     MATRIX BodyModel, NeckModel, HeadModel,
         MouseModel, EyeModel, HairModel,
@@ -47,6 +52,4 @@ private:
                     Leg2R,
                 Leg1L,
                     Leg2L;
-    //汎用アングル
-    float AnimAngle = 0;
 };

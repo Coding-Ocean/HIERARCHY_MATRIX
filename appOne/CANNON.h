@@ -17,6 +17,7 @@ public:
     VECTOR angle();
     struct DATA {
         VECTOR pos;
+        VECTOR offsetPos;
         VECTOR angle;
         COLOR wheelColor;
         COLOR bodyColor;
@@ -36,5 +37,6 @@ private:
     class CYLINDER* Cylinder;
     class BARREL* Barrel;
     //Hierarchy Matrix
-    MATRIX Master, WheelL, WheelR, Body;
+    MATRIX WheelLModel, WheelRModel;
+    MATRIX Master, Body;
 };

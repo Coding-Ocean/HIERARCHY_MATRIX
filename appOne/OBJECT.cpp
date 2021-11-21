@@ -37,23 +37,24 @@ VECTOR OBJECT::angle()
 }
 
 //各オブジェクトが個別に呼び出すメンバ----------------------------------------
-
 //回転制御。指定した方向にゆっくり向ける。向き終わったらフラグを立てる。
 int OBJECT::rotate(
     VECTOR* angle, const VECTOR& dir, float rotSpeed, int endOfRotationFlag)
 {
-    //Ｘ軸回転
+    //Ｘ軸回転させるangleを求める
+    //次の式のように「真下を向いたベクトル」と「ｂベクトル」の内積は、-b.yになる
+    //cosθ = downVec(0,-1,0) ・ b(x,y,z) = -b.y
     VECTOR b = normalize(dir);
     float angleBetweenX = -(acos(-b.y) - 1.57f) - angle->x;
     angle->x += angleBetweenX * rotSpeed;
-    //Ｙ軸回転
+    //Ｙ軸回転させるangleを求める
     VECTOR a(sin(angle->y), 0, cos(angle->y));
     float dotProduct = a.x * b.x + a.z * b.z;
     float crossProduct = a.x * b.z - a.z * b.x;
     float angleBetweenY = atan2(-crossProduct, dotProduct);
     angle->y += angleBetweenY * rotSpeed;
     //回転終了
-    if (-0.02f < angleBetweenY && angleBetweenY <0.02f) {
+    if (-0.017f < angleBetweenY && angleBetweenY < 0.017f) {
         EndOfStateFlags |= endOfRotationFlag;
         return 1;
     }

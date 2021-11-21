@@ -5,11 +5,13 @@
 class FLOOR :
     public OBJECT
 {
+//Functions
 public:
     FLOOR(class GAME* game);
     int setup();
     void draw();
     VECTOR pos();
+//Data
     struct DATA {
         VECTOR pos;
         int range;

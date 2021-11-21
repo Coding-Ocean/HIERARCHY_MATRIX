@@ -41,11 +41,12 @@ void SATELLITE::update()
 
     if (objState() == OBJ_STATE::ROTATE) {
         //‚±‚ê‚©‚çŒü‚­•ûŒüdir
-        //dir‚Í”ò‚ñ‚Å—ˆ‚½•ûŒüa‚Æ”ò‚ñ‚Ås‚­•ûŒüb‚ð‚Q•ª‚µ‚½•ûŒü
+        //dir‚Íu”ò‚ñ‚Å—ˆ‚½•ûŒüav‚Æu”ò‚ñ‚Ås‚­•ûŒübv‚ð‚Q•ª‚µ‚½•ûŒü
         VECTOR a = game()->object(Data.preObjId)->pos() - Data.pos;
         VECTOR b = game()->object(Data.postObjId)->pos() - Data.pos;
         a.normalize();
         b.normalize();
+        //a + b‚Å‚Q•ª‚µ‚½•ûŒü‚Æ‚È‚é
         VECTOR dir = a + b;
         //‰ñ“]
         rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
@@ -57,15 +58,19 @@ void SATELLITE::update()
         rotate(&Data.angle, dir, Data.rotBackSpeed, Data.endOfRotationFlag);
     }
 
-    Master.translate(Data.pos.x, Data.pos.y, Data.pos.z);
+    Master.identity();
+    Master.mulTranslate(Data.pos.x, Data.pos.y, Data.pos.z);
     Master.mulRotateY(Data.angle.y);
     Master.mulRotateX(Data.angle.x);
-    Ref.translate(0, 0, 0.001f);
+    Ref.identity();
+    Ref.mulTranslate(0, 0, 0.001f);
     Ref.mulRotateZ(AnimAngle);
-    Ref.mulScaling(1.1f, 1.1f, 0.0f);
-    WingL.translate(0.85f, 0, -1.0f);
+    Ref.mulScaling(1.1f, 1.1f, 1.0f);
+    WingL.identity();
+    WingL.mulTranslate(0.85f, 0, -1.0f);
     WingL.mulRotateX(AnimAngle);
-    WingR.translate(-0.85f, 0, -1.0f);
+    WingR.identity();
+    WingR.mulTranslate(-0.85f, 0, -1.0f);
     WingR.mulRotateX(AnimAngle);
     AnimAngle += Data.animSpeed;
 }
@@ -73,12 +78,9 @@ void SATELLITE::update()
 void SATELLITE::draw()
 {
     Cylinder->draw(Master, Data.bodyColor, Data.ambient);
-    Ref = Master * Ref;
-    Square.draw(Ref, Data.squareColor, Data.refAmbient);
-    WingL = Master * WingL;
-    Square.draw(WingL * WingModel, Data.squareColor, Data.ambient);
-    WingR = Master * WingR;
-    Square.draw(WingR * WingModel, Data.squareColor, Data.ambient);
+    Square.draw(Master * Ref, Data.squareColor, Data.refAmbient);
+    Square.draw(Master * WingL * WingModel, Data.squareColor, Data.ambient);
+    Square.draw(Master * WingR * WingModel, Data.squareColor, Data.ambient);
 }
 
 VECTOR SATELLITE::pos()

@@ -24,6 +24,12 @@ int CANNON::setup()
     //Model
     Cylinder = new CYLINDER(36, 0, -0.2f);
     Barrel = new BARREL;
+    WheelLModel.identity();
+    WheelLModel.mulTranslate(0.5f, 0.5f, 0);
+    WheelLModel.mulRotateY(-1.57f);
+    WheelRModel.identity();
+    WheelRModel.mulTranslate(-0.5f, 0.5f, 0);
+    WheelRModel.mulRotateY(1.57f);
 
     return 0;
 }
@@ -56,7 +62,7 @@ void CANNON::update()
 
     if (objState()==OBJ_STATE::ROTATE) {
         //dir‚ÖŒü‚¯‚é
-        VECTOR dir = Target->pos() - Data.pos;
+        VECTOR dir = Target->pos() - pos();
         rotate(&Data.angle, dir, Data.rotSpeed, Data.endOfRotationFlag);
     }
     
@@ -68,30 +74,21 @@ void CANNON::update()
     Master.identity();
     Master.mulTranslate(Data.pos.x, Data.pos.y, Data.pos.z);
     Master.mulRotateY(Data.angle.y);
-    WheelL.identity();
-    WheelL.mulTranslate(0.5f, -0.3f, 0);
-    WheelL.mulRotateY(-1.57f);
-    WheelR.identity();
-    WheelR.mulTranslate(-0.5f, -0.3f, 0);
-    WheelR.mulRotateY(1.57f);
     Body.identity();
-    Body.mulTranslate(0, 0, 0);
+    Body.mulTranslate(Data.offsetPos.x,Data.offsetPos.y,Data.offsetPos.z);
     Body.mulRotateX(Data.angle.x);
 }
 
 void CANNON::draw() 
 {
-    WheelL = Master * WheelL;
-    Cylinder->draw(WheelL, Data.wheelColor, Data.ambient);
-    WheelR = Master * WheelR;
-    Cylinder->draw(WheelR, Data.wheelColor, Data.ambient);
-    Body = Master * Body;
-    Barrel->draw(Body,Data.bodyColor, Data.ambient);
+    Cylinder->draw(Master * WheelLModel, Data.wheelColor, Data.ambient);
+    Cylinder->draw(Master * WheelRModel, Data.wheelColor, Data.ambient);
+    Barrel->draw(Master * Body, Data.bodyColor, Data.ambient);
 }
 
 VECTOR CANNON::pos()
 {
-    return Data.pos;
+    return (Data.pos + Data.offsetPos);
 }
 
 VECTOR CANNON::angle()

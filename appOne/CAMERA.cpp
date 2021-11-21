@@ -8,15 +8,19 @@ CAMERA::CAMERA(class GAME* game)
 {
 }
 
+CAMERA::~CAMERA()
+{
+    SAFE_DELETE_ARRAY(Targets);
+}
+
 int CAMERA::setup()
 {
     Data = game()->allData()->cameraData;
 
-    Target[0] = game()->object(OBJ_ID::FLOOR);
-    Target[1] = game()->object(OBJ_ID::BULLET);
-    Target[2] = game()->object(OBJ_ID::SATELLITE1);
-    Target[3] = game()->object(OBJ_ID::SATELLITE2);
-    Target[4] = game()->object(OBJ_ID::ENEMY);
+    Targets = new OBJECT * [Data.numTargets];
+    for (int i = 0; i < Data.numTargets; i++) {
+        Targets[i] = game()->object(Data.objId[i]);
+    }
 
     return 0;
 }
@@ -34,7 +38,7 @@ void CAMERA::update(){
     if (Data.distance < 1.0f) { Data.distance = 1.0f; }
     //ターゲット変更
     if (isTrigger(KEY_C)) {
-        ++Data.targetIdx %= 5;
+        ++Data.targetIdx %= Data.numTargets;
         if (Data.targetIdx == 0) {
             Data.distance = 17;
         }
@@ -42,11 +46,13 @@ void CAMERA::update(){
             Data.distance = 6;
         }
     }
-    TargetPos = Target[Data.targetIdx]->pos();
+    TargetPos = Targets[Data.targetIdx]->pos();
     //カメラ位置（３D極座標）
-    Data.pos.x = sin(Data.angle.y) * cos(Data.angle.x) * Data.distance + TargetPos.x;
-    Data.pos.y =                     sin(Data.angle.x) * Data.distance + TargetPos.y;
-    Data.pos.z = cos(Data.angle.y) * cos(Data.angle.x) * Data.distance + TargetPos.z;
+    Data.pos.x = sin(Data.angle.y) * cos(Data.angle.x) * Data.distance;
+    Data.pos.y = sin(Data.angle.x) * Data.distance;
+    Data.pos.z = cos(Data.angle.y) * cos(Data.angle.x) * Data.distance;
+    Data.pos += TargetPos;
+    //上方ベクトル
     UpVec.y = cos(Data.angle.x);
     MODEL::view.camera(Data.pos, TargetPos, UpVec);
 #ifdef _DEBUG_
